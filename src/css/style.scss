@@ -1,0 +1,338 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+
+@mixin flex($direction: row, $justify: initial, $align: initial) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+$white: hsl(0, 0%, 100%);
+$very-light-gray: hsl(228, 33%, 97%);
+$moderate-blue: hsl(238, 40%, 52%);
+$soft-red: hsl(358, 79%, 66%);
+$grayish-blue: hsl(211, 10%, 45%);
+
+%box-appearance {
+  padding: 1em;
+  background: $white;
+  border-radius: 6px;
+  margin: 0.5em;
+  grid-gap: 0.6em 0;
+}
+
+html {
+  min-height: 100vh;
+
+  body {
+    min-height: 100vh;
+    @include flex(column, space-around, center);
+    margin: 0;
+    background: $very-light-gray;
+    font-family: "Nanum Gothic", sans-serif;
+    font-size: 1em;
+
+    #app {
+      width: 70%;
+      @media (max-device-width: 900px) {
+        width: 90%;
+      }
+      @media (max-device-width: 630px) {
+        width: 95%;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .comment-box {
+        @include flex(column, $align: flex-end);
+        width: 100%;
+
+        .comment,
+        .reply,
+        .editing {
+          display: grid;
+          grid-template-columns: 3em;
+          width: stretch;
+          @extend %box-appearance;
+
+          .score {
+            @include flex(column, center, center);
+            grid-column: 1/2;
+            grid-row: 1/4;
+            align-self: flex-start;
+            width: 2em;
+            height: 6em;
+            border-radius: 6px;
+            background: $very-light-gray;
+            font-size: 0.8em;
+            font-weight: bold;
+            @media (max-device-width: 630px) {
+              @include flex(row, center, center);
+              grid-column: 1/3;
+              grid-row: 4/5;
+              justify-content: space-around;
+              width: 6em;
+              height: 2.5em;
+            }
+
+            span {
+              color: $moderate-blue;
+            }
+
+            .score-bttn {
+              border: none;
+              background: inherit;
+
+              svg {
+                fill: #c5c6ef;
+              }
+            }
+
+            .score-bttn:hover,
+            .score-bttn:disabled {
+              svg {
+                fill: $moderate-blue;
+              }
+            }
+          }
+
+          .user {
+            @include flex($justify: space-evenly, $align: center);
+            grid-row: 1/2;
+            grid-column: 2/4;
+            justify-self: flex-start;
+            font-size: 0.8em;
+            @media (max-device-width: 630px) {
+              grid-column: 1/4;
+            }
+
+            .username,
+            .currentuser {
+              margin-right: 1em;
+              font-weight: bold;
+            }
+
+            .currentuser {
+              background: $moderate-blue;
+              color: $white;
+              padding: 0.4em;
+              border-radius: 5px;
+            }
+          }
+
+          .reply-bttn {
+            grid-row: 1/2;
+            grid-column: 4/5;
+            color: $moderate-blue;
+            @media (max-device-width: 630px) {
+              grid-column: 3/4;
+              grid-row: 4/5;
+            }
+          }
+
+          .content {
+            grid-row: 2/4;
+            grid-column: 2/5;
+            margin: 0.1em 0.5em;
+            word-break: break-word;
+            font-size: 0.95em;
+            @media (max-device-width: 630px) {
+              grid-column: 1/4;
+            }
+            .replied-to {
+              color: $moderate-blue;
+              font-weight: bold;
+            }
+          }
+
+          .currentuser-features {
+            @include flex($justify: space-evenly, $align: center);
+            grid-column: 4/5;
+            justify-self: end;
+            @media (max-device-width: 630px) {
+              grid-column: 3/4;
+            }
+            .delete-bttn {
+              color: $soft-red;
+            }
+
+            .edit-bttn {
+              color: $moderate-blue;
+            }
+          }
+        }
+
+        .replies {
+          @include flex(column);
+          width: 80%;
+          @media (max-device-width: 630px) {
+            width: 90%;
+          }
+        }
+
+        .replying {
+          @include flex($justify: space-between, $align: flex-start);
+          @extend %box-appearance;
+          width: stretch;
+        }
+
+        .editing {
+          @extend %box-appearance;
+
+          .score {
+            grid-row: 1/3;
+            @media (max-device-width: 630px) {
+              grid-row: 3/4;
+            }
+          }
+          .user {
+            grid-column: 2/3;
+            @media (max-device-width: 630px) {
+              grid-column: 1/2;
+            }
+          }
+          textarea {
+            width: 85%;
+            grid-column: 2/4;
+            @media (max-device-width: 630px) {
+              grid-column: 1/4;
+            }
+          }
+          .update-bttn,
+          .delete-bttn {
+            grid-column: 3/4;
+          }
+          .delete-bttn {
+            color: $soft-red;
+          }
+        }
+      }
+
+      .add-comment {
+        @include flex($justify: space-between, $align: flex-start);
+        @extend %box-appearance;
+      }
+
+      .deleting-overlay {
+        @include flex($justify: center, $align: center);
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #00000057;
+
+        .deleting-box {
+          @extend %box-appearance;
+          width: 35%;
+          padding: 2em;
+          @media (max-device-width: 630px) {
+            width: 75%;
+          }
+          h2 {
+            margin: auto;
+            font-size: 1.1em;
+          }
+          p {
+            font-size: 0.9em;
+          }
+          .delete-options {
+            @include flex($justify: space-between);
+            .cancel-bttn,
+            .accept-bttn {
+              text-transform: uppercase;
+              font-size: 0.8em;
+              width: 40%;
+            }
+            .cancel-bttn {
+              background: $soft-red;
+            }
+            .accept-bttn {
+              background: $grayish-blue;
+            }
+          }
+        }
+      }
+
+      .username-img {
+        width: 2em;
+        height: 2em;
+        margin: 0 1em;
+        img {
+          width: 100%;
+        }
+      }
+
+      textarea {
+        width: 65%;
+        border: 2px solid $moderate-blue;
+        resize: none;
+        border-radius: 5px;
+        outline: none;
+        padding: 0.5em;
+        margin: 0 1em;
+        font-family: "Nanum Gothic", sans-serif;
+        font-size: 0.95em;
+      }
+
+      .reply-bttn,
+      .delete-bttn,
+      .edit-bttn {
+        @include flex($justify: space-evenly, $align: center);
+        justify-self: end;
+        width: 6em;
+        font-size: 0.8em;
+        font-weight: bold;
+        border: none;
+        background: inherit;
+
+        div {
+          width: 0.8em;
+        }
+      }
+      .reply-bttn:hover,
+      .delete-bttn:hover,
+      .edit-bttn:hover,
+      .send-bttn:hover,
+      .sendreply-bttn:hover,
+      .update-bttn:hover,
+      .cancel-bttn:hover,
+      .accept-bttn:hover {
+        opacity: 0.5;
+      }
+
+      .send-bttn,
+      .sendreply-bttn,
+      .cancel-bttn,
+      .accept-bttn,
+      .update-bttn {
+        padding: 0.9em;
+        border-radius: 5px;
+        border: none;
+        color: $white;
+        font-weight: bold;
+      }
+
+      .send-bttn,
+      .sendreply-bttn,
+      .update-bttn {
+        width: 6em;
+        background: $moderate-blue;
+        text-transform: uppercase;
+        font-size: 0.75em;
+        justify-self: end;
+      }
+    }
+
+    .attribution {
+      font-size: 11px;
+      text-align: center;
+      margin: 1em;
+
+      a {
+        color: hsl(228, 45%, 44%);
+      }
+    }
+  }
+}
