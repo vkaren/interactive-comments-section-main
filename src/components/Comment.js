@@ -200,7 +200,7 @@ class Comment extends React.Component {
               ? this.state.createdAt
               : this.props.createdAt
           }
-          onClickDelete={this.props.deleting}
+          onClickDelete={this.deleting}
           value={this.state.editedContent}
           onInput={this.onInputEdit}
           onClickUpdate={this.update}

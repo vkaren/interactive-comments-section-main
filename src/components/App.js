@@ -9,6 +9,8 @@ class App extends React.Component {
     comments: data.comments.slice(),
   };
 
+  keyComment = 0;
+
   componentDidMount() {
     let comments = this.state.comments.slice();
 
@@ -32,11 +34,10 @@ class App extends React.Component {
     }
   };
 
-  keyComment = 0;
-
   sendComment = () => {
     let comments = this.state.comments.slice();
     let newComment = this.state.newComment;
+
     comments.push({
       key: "commentbox-" + this.keyComment,
       keyComment: this.keyComment,
@@ -45,8 +46,8 @@ class App extends React.Component {
       score: 0,
       user: {
         image: {
-          png: "../images/avatars/image-juliusomo.png",
-          webp: "../images/avatars/image-juliusomo.webp",
+          png: "./images/avatars/image-juliusomo.png",
+          webp: "./images/avatars/image-juliusomo.webp",
         },
         username: "juliusomo",
       },

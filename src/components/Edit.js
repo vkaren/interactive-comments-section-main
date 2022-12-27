@@ -22,7 +22,7 @@ function Edit(props) {
       <Button
         className="delete-bttn"
         innerText="Delete"
-        onClick={() => props.onClickDelete(props.index)}
+        onClick={props.onClickDelete}
         image="./images/icon-delete.svg"
         alt="delete"
       />

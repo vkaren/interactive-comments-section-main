@@ -10,6 +10,8 @@ class CommentBox extends React.Component {
     replies: this.props.replies.slice(),
   };
 
+  keyReply = 0;
+
   componentDidMount() {
     let replies = this.state.replies.slice();
 
@@ -39,8 +41,6 @@ class CommentBox extends React.Component {
 
     this.setState({ repliedMessage });
   };
-
-  keyReply = 0;
 
   sendReply = (reply = {}) => {
     let replies = this.state.replies.slice();

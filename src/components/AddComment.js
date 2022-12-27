@@ -11,7 +11,10 @@ function AddComment(props) {
         onInput={props.onInput}
         onKeyDown={props.onInput}
       ></textarea>
-      <button className={props.button.className} onClick={props.onClick}>
+      <button
+        className={props.button.className}
+        onClick={() => props.onClick()}
+      >
         {props.button.innerText}
       </button>
     </div>
