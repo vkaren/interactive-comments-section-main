@@ -3,12 +3,19 @@
   "version": "1.0.0",
   "description": "Interactive comments section",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
   "keywords": [
     "react",
     "nextjs"
   ],
   "author": "Karen Varela",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "next": "^13.4.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
