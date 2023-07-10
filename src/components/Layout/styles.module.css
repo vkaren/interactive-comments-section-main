@@ -3,8 +3,12 @@
   width: 100%;
   padding: 0.5rem 0;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid var(--light-gray);
+  background: var(--white);
 }
 .main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: auto 0;
 }
