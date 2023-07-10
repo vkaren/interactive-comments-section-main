@@ -11,7 +11,7 @@
 
 /* Sign in title*/
 .sign-in__title {
-  padding-top: 5rem;
+  padding-top: 4.3rem;
   font-size: 2.5rem;
 }
 
@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 5rem 0;
+  margin-top: 4rem;
 }
 
 /* Sign in form - Labels*/
@@ -72,4 +72,14 @@
   text-decoration: none;
   color: var(--moderate-blue);
   cursor: pointer;
+}
+
+/* Sign in error */
+.error {
+  margin-bottom: 10px;
+  padding: 0 8rem;
+  font-size: 1.3rem;
+  font-weight: lighter;
+  text-align: center;
+  color: var(--soft-red);
 }

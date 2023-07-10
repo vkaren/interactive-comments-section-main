@@ -1,61 +1,116 @@
-import React from "react";
+import React, { createRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { withRouter } from "next/router";
 import styles from "./styles.module.css";
 
-const SignIn = () => {
-  const router = useRouter();
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loginError: "",
+    };
+    this.form = createRef();
+  }
 
-  const logIn = (e) => {
+  logIn = (e) => {
     e.preventDefault();
-    router.push("/comments");
+
+    const form = new FormData(this.form.current);
+    const usernameInput = form.get("username");
+    const passwordInput = form.get("password");
+
+    const userStorage = this.isUserCreated();
+
+    const canLogin = this.validateForm({
+      usernameInput,
+      passwordInput,
+      userStorage,
+    });
+
+    if (canLogin) {
+      // this.props.router.push("/comments");
+    }
   };
 
-  return (
-    <section className={styles["sign-in"]}>
-      <h2 className={styles["sign-in__title"]}>Log in</h2>
+  isUserCreated = () => {
+    const user = JSON.parse(localStorage.getItem("user")) || {};
 
-      <form className={styles["sign-in__form"]}>
-        <label htmlFor="username">
-          <span>Username</span>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            placeholder="juliusomo"
-            required
-          />
-        </label>
+    return user;
+  };
 
-        <label htmlFor="password">
-          <span>Password</span>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="1234"
-            minLength="5"
-            required
-          />
-        </label>
+  validateForm = ({ usernameInput, passwordInput, userStorage }) => {
+    if (
+      userStorage.username === usernameInput &&
+      userStorage.password === passwordInput
+    ) {
+      this.setState({ loginError: "" });
+      return true;
+    }
 
-        <button
-          className={styles["sign-in__form_submit"]}
-          onClick={logIn}
-          type="submit"
-        >
-          Log in
-        </button>
+    if (!usernameInput) {
+      this.setState({ loginError: "Username required" });
+    } else if (!passwordInput) {
+      this.setState({ loginError: "Password required" });
+    } else if (!userStorage) {
+      this.setState({ loginError: "Create an account" });
+    } else if (userStorage.username !== usernameInput) {
+      this.setState({ loginError: "This username has not been created" });
+    } else if (userStorage.password !== passwordInput) {
+      this.setState({ loginError: "Invalid password" });
+    }
 
-        <span className={styles["sign-up__link"]}>
-          Don't have an account?
-          <Link href="/sign-up">
-            <span>Create one</span>
-          </Link>
-        </span>
-      </form>
-    </section>
-  );
-};
+    return false;
+  };
 
-export default SignIn;
+  render() {
+    return (
+      <section className={styles["sign-in"]}>
+        <h2 className={styles["sign-in__title"]}>Log in</h2>
+
+        <form ref={this.form} className={styles["sign-in__form"]}>
+          <label htmlFor="username">
+            <span>Username</span>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="juliusomo"
+              required
+            />
+          </label>
+
+          <label htmlFor="password">
+            <span>Password</span>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="1234"
+              minLength="5"
+              required
+            />
+          </label>
+
+          <span className={styles.error}>{this.state.loginError}</span>
+
+          <button
+            onClick={this.logIn}
+            className={styles["sign-in__form_submit"]}
+            type="submit"
+          >
+            Log in
+          </button>
+
+          <span className={styles["sign-up__link"]}>
+            Don't have an account?
+            <Link href="/sign-up">
+              <span>Create one</span>
+            </Link>
+          </span>
+        </form>
+      </section>
+    );
+  }
+}
+
+export default withRouter(SignIn);
