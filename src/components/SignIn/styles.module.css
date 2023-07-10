@@ -67,8 +67,9 @@
   font-size: 1.2rem;
   color: var(--grayish-blue);
 }
-.sign-up__link a {
+.sign-up__link span {
   margin-left: 3px;
   text-decoration: none;
   color: var(--moderate-blue);
+  cursor: pointer;
 }
