@@ -14,12 +14,20 @@ const SignIn = () => {
             name="username"
             type="text"
             placeholder="juliusomo"
+            required
           />
         </label>
 
         <label htmlFor="password">
           <span>Password</span>
-          <input id="password" name="password" type="text" placeholder="1234" />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="1234"
+            minlength="5"
+            required
+          />
         </label>
 
         <button className={styles["sign-in__form_submit"]} type="submit">

@@ -5,6 +5,7 @@
   text-align: center;
 }
 .page_footer a {
-  color: hsl(228, 45%, 44%);
+  text-decoration: none;
+  color: var(--moderate-blue);
   margin: 0 5px;
 }

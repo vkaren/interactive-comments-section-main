@@ -6,13 +6,12 @@ const Footer = () => (
     <p>
       Challenge by
       <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">
-        Frontend Mentor
+        Frontend Mentor.
       </a>
-      . Coded by
+      Coded by
       <a href="https://github.com/vkaren" target="_blank">
-        Karen Varela
+        Karen Varela.
       </a>
-      .
     </p>
   </footer>
 );
