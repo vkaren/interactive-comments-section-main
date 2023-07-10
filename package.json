@@ -14,7 +14,7 @@
   "author": "Karen Varela",
   "license": "MIT",
   "devDependencies": {
-    "next": "^13.4.9",
+    "next": "^12.1.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
