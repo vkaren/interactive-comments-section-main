@@ -51,7 +51,7 @@ class SignIn extends React.Component {
       this.setState({ loginError: "Username required." });
     } else if (!passwordInput) {
       this.setState({ loginError: "Password required." });
-    } else if (userStorage.username !== usernameInput) {
+    } else if (!userStorage.username) {
       this.setState({ loginError: "This username has not been created." });
     } else if (userStorage.password !== passwordInput) {
       this.setState({ loginError: "Invalid password." });

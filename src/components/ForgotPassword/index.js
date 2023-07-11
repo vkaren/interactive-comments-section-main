@@ -55,8 +55,13 @@ class ForgotPassword extends React.Component {
   validateForm = ({ usernameInput, passwordInput, userStorage }) => {
     const regex = /^([a-z0-9_])+$/i;
     const isARightPassword = regex.test(passwordInput);
+    const isPasswordRightLength = passwordInput.length >= 5;
 
-    if (userStorage.username === usernameInput && isARightPassword) {
+    if (
+      userStorage.username === usernameInput &&
+      isARightPassword &&
+      isPasswordRightLength
+    ) {
       this.setState({ recoveryPasswordError: "" });
       return true;
     }
@@ -73,6 +78,10 @@ class ForgotPassword extends React.Component {
       this.setState({
         recoveryPasswordError:
           "Password can only contain underscores and alphanumeric characters.",
+      });
+    } else if (!isPasswordRightLength) {
+      this.setState({
+        recoveryPasswordError: "Password must be at least 5 characters long.",
       });
     }
 

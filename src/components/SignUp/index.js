@@ -27,11 +27,11 @@ class SignUp extends React.Component {
 
     if (canCreateAnAccount) {
       const user = { username, password };
-
       createdUsers.push(user);
 
       const usersStorage = JSON.stringify(createdUsers);
       localStorage.setItem("users", usersStorage);
+
       // this.props.router.push("/comments");
     }
   };
@@ -42,11 +42,13 @@ class SignUp extends React.Component {
       createdUsers,
       username,
     });
+    const isPasswordRightLength = password.length >= 5;
 
     if (
       regex.test(username) &&
       regex.test(password) &&
-      !isUsernameAlreadyTaken
+      !isUsernameAlreadyTaken &&
+      isPasswordRightLength
     ) {
       this.setState({ signUpError: "" });
       return true;
@@ -61,6 +63,10 @@ class SignUp extends React.Component {
     } else if (password === "") {
       this.setState({
         signUpError: "Password required.",
+      });
+    } else if (!isPasswordRightLength) {
+      this.setState({
+        signUpError: "Password must be at least 5 characters long.",
       });
     } else {
       this.setState({
