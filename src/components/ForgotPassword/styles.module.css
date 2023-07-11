@@ -9,13 +9,13 @@
   background: var(--white);
 }
 
-/* Sign in title*/
+/* Forgot passwod title*/
 .forgot-password__title {
   padding-top: 4.5rem;
   font-size: 2.5rem;
 }
 
-/* Sign in form*/
+/* Forgot passwod form*/
 .forgot-password__form {
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
   margin-top: 4rem;
 }
 
-/* Sign in form - Labels*/
+/* Forgot passwod form - Labels*/
 .forgot-password__form_label {
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   color: var(--grayish-blue);
 }
 
-/* Sign in form - Submit button*/
+/* Forgot passwod form - Submit button*/
 .forgot-password__form_submit {
   padding: 0.7rem 1.5rem;
   font-weight: bold;
@@ -61,7 +61,7 @@
   opacity: 1;
 }
 
-/* Sign in error */
+/* Forgot passwod error */
 .error {
   margin-bottom: 10px;
   padding: 0 8rem;

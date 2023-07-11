@@ -9,13 +9,13 @@
   background: var(--white);
 }
 
-/* Sign in title*/
+/* Sign up title*/
 .sign-up__title {
   padding-top: 4.3rem;
   font-size: 2.5rem;
 }
 
-/* Sign in form*/
+/* Sign up form*/
 .sign-up__form {
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
   margin-top: 5rem;
 }
 
-/* Sign in form - Labels*/
+/* Sign up form - Labels*/
 .sign-up__form label {
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   color: var(--grayish-blue);
 }
 
-/* Sign in form - Submit button*/
+/* Sign up form - Submit button*/
 .sign-up__form_submit {
   padding: 0.7rem 1.5rem;
   font-weight: bold;
