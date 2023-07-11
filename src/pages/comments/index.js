@@ -38,7 +38,7 @@ class CommentsPage extends React.Component {
     return (
       <Layout>
         {this.state.canAccess ? (
-          <Comments username={this.state.user} />
+          <Comments user={this.state.user} />
         ) : (
           <FormSkeleton />
         )}
