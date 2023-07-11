@@ -19,7 +19,7 @@ class SignIn extends React.Component {
     const usernameInput = form.get("username");
     const passwordInput = form.get("password");
 
-    const userStorage = this.isUserCreated();
+    const userStorage = this.isUserCreated(usernameInput);
 
     const canLogin = this.validateForm({
       usernameInput,
@@ -32,10 +32,10 @@ class SignIn extends React.Component {
     }
   };
 
-  isUserCreated = () => {
-    const user = JSON.parse(localStorage.getItem("user")) || {};
+  isUserCreated = (username) => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-    return user;
+    return users.filter((user) => user.username === username)[0] || {};
   };
 
   validateForm = ({ usernameInput, passwordInput, userStorage }) => {
@@ -48,15 +48,13 @@ class SignIn extends React.Component {
     }
 
     if (!usernameInput) {
-      this.setState({ loginError: "Username required" });
+      this.setState({ loginError: "Username required." });
     } else if (!passwordInput) {
-      this.setState({ loginError: "Password required" });
-    } else if (!userStorage) {
-      this.setState({ loginError: "Create an account" });
+      this.setState({ loginError: "Password required." });
     } else if (userStorage.username !== usernameInput) {
-      this.setState({ loginError: "This username has not been created" });
+      this.setState({ loginError: "This username has not been created." });
     } else if (userStorage.password !== passwordInput) {
-      this.setState({ loginError: "Invalid password" });
+      this.setState({ loginError: "Invalid password." });
     }
 
     return false;
@@ -68,9 +66,12 @@ class SignIn extends React.Component {
         <h2 className={styles["sign-in__title"]}>Log in</h2>
 
         <form ref={this.form} className={styles["sign-in__form"]}>
-          <label htmlFor="username">
-            <span>Username</span>
+          <label htmlFor="username" className={styles["sign-in__form_label"]}>
+            <span className={styles["sign-in__form_input-title"]}>
+              Username
+            </span>
             <input
+              className={styles["sign-in__form_input"]}
               id="username"
               name="username"
               type="text"
@@ -79,9 +80,12 @@ class SignIn extends React.Component {
             />
           </label>
 
-          <label htmlFor="password">
-            <span>Password</span>
+          <label htmlFor="password" className={styles["sign-in__form_label"]}>
+            <span className={styles["sign-in__form_input-title"]}>
+              Password
+            </span>
             <input
+              className={styles["sign-in__form_input"]}
               id="password"
               name="password"
               type="password"
@@ -89,6 +93,11 @@ class SignIn extends React.Component {
               minLength="5"
               required
             />
+            <Link href="/forgot-password">
+              <span className={styles["forgot-password__link"]}>
+                Forgot password?
+              </span>
+            </Link>
           </label>
 
           <span className={styles.error}>{this.state.loginError}</span>

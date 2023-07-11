@@ -24,23 +24,32 @@
 }
 
 /* Sign in form - Labels*/
-.sign-in__form label {
+.sign-in__form_label {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
 }
-.sign-in__form label span {
+.sign-in__form_input-title {
   margin: 0.5rem 0;
   font-size: 1.5rem;
 }
-.sign-in__form label input {
+.sign-in__form_input {
   padding: 5px 10px;
   letter-spacing: 1px;
   border-radius: 3px;
   border: 1px solid var(--light-grayish-blue);
 }
-.sign-in__form label input::placeholder {
+.sign-in__form_input::placeholder {
   color: var(--grayish-blue);
+}
+
+/* Sign in form - Forgot password link*/
+.forgot-password__link {
+  margin-top: 0.8rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--moderate-blue);
+  cursor: pointer;
 }
 
 /* Sign in form - Submit button*/
