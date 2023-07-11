@@ -18,37 +18,61 @@ class SignUp extends React.Component {
     const username = form.get("username");
     const password = form.get("password");
 
-    const canCreateAnAccount = this.validateForm({ username, password });
+    const createdUsers = JSON.parse(localStorage.getItem("users")) || [];
+    const canCreateAnAccount = this.validateForm({
+      username,
+      password,
+      createdUsers,
+    });
 
     if (canCreateAnAccount) {
       const user = { username, password };
-      const userStorage = JSON.stringify(user);
-      localStorage.setItem("user", userStorage);
+
+      createdUsers.push(user);
+
+      const usersStorage = JSON.stringify(createdUsers);
+      localStorage.setItem("users", usersStorage);
       // this.props.router.push("/comments");
     }
   };
 
-  validateForm = ({ username, password }) => {
+  validateForm = ({ username, password, createdUsers }) => {
     const regex = /^([a-z0-9_])+$/i;
+    const isUsernameAlreadyTaken = this.isUsernameAlreadyTaken({
+      createdUsers,
+      username,
+    });
 
-    if (regex.test(username) && regex.test(password)) {
+    if (
+      regex.test(username) &&
+      regex.test(password) &&
+      !isUsernameAlreadyTaken
+    ) {
       this.setState({ signUpError: "" });
       return true;
+    } else if (isUsernameAlreadyTaken) {
+      this.setState({
+        signUpError: "This username is already taken.",
+      });
     } else if (username === "") {
       this.setState({
-        signUpError: "Username required",
+        signUpError: "Username required.",
       });
     } else if (password === "") {
       this.setState({
-        signUpError: "Password required",
+        signUpError: "Password required.",
       });
     } else {
       this.setState({
         signUpError:
-          "Username and password can only contain underscores and alphanumeric characters",
+          "Username and password can only contain underscores and alphanumeric characters.",
       });
     }
     return false;
+  };
+
+  isUsernameAlreadyTaken = ({ createdUsers, username }) => {
+    return createdUsers.filter((user) => user.username === username).length > 0;
   };
 
   render() {
