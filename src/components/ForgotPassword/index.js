@@ -29,7 +29,14 @@ class ForgotPassword extends React.Component {
 
     if (canRecoverPassword) {
       this.setNewPassword({ userStorage, passwordInput });
-      this.props.router.push(`/comments/${userStorage.username}`);
+
+      this.props.router.push(
+        {
+          pathname: "/comments",
+          query: { username: userStorage.username },
+        },
+        "/comments"
+      );
     }
   };
 

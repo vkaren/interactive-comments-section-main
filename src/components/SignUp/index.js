@@ -26,13 +26,19 @@ class SignUp extends React.Component {
     });
 
     if (canCreateAnAccount) {
-      const user = { username, password };
+      const user = { username, password, isLoggedIn: true };
       createdUsers.push(user);
 
       const usersStorage = JSON.stringify(createdUsers);
       localStorage.setItem("users", usersStorage);
 
-      this.props.router.push(`/comments/${user.username}`);
+      this.props.router.push(
+        {
+          pathname: "/comments",
+          query: { username: user.username },
+        },
+        "/comments"
+      );
     }
   };
 
