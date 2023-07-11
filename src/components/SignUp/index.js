@@ -32,7 +32,7 @@ class SignUp extends React.Component {
       const usersStorage = JSON.stringify(createdUsers);
       localStorage.setItem("users", usersStorage);
 
-      // this.props.router.push("/comments");
+      this.props.router.push(`/comments/${user.username}`);
     }
   };
 

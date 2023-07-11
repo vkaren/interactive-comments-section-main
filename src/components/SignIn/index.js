@@ -28,7 +28,7 @@ class SignIn extends React.Component {
     });
 
     if (canLogin) {
-      // this.props.router.push("/comments");
+      this.props.router.push(`/comments/${userStorage.username}`);
     }
   };
 
