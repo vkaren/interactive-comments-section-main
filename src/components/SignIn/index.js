@@ -10,6 +10,9 @@ class SignIn extends React.Component {
       loginError: "",
     };
     this.form = createRef();
+  }
+
+  componentDidMount() {
     this.usersStorage = JSON.parse(localStorage.getItem("users")) || [];
   }
 

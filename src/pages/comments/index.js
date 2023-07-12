@@ -3,6 +3,7 @@ import Layout from "@components/Layout";
 import FormSkeleton from "@components/FormSkeleton";
 import App from "app";
 import { withRouter } from "next/router";
+import data from "@data/data.json";
 
 class CommentsPage extends React.Component {
   constructor(props) {
@@ -14,6 +15,11 @@ class CommentsPage extends React.Component {
   }
 
   componentDidMount() {
+    if (!localStorage.getItem("comments")) {
+      const comments = JSON.stringify(data.comments);
+      localStorage.setItem("comments", comments);
+    }
+
     this.usersStorage = JSON.parse(localStorage.getItem("users")) || [];
 
     if (this.state.user || this.isAnUserLoggedIn()) {
