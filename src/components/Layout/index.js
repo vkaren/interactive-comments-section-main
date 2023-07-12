@@ -1,21 +1,24 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Head from "next/head";
+import Header from "@components/Header";
 import Footer from "@components/Footer";
-import Image from "next/image";
-import headerIcon from "@icons/favicon-32x32.png";
 import styles from "./styles.module.css";
 
-const Layout = ({ children }) => (
-  <>
-    <Head>
-      <title>Interactive comments section</title>
-    </Head>
-    <header className={styles.header}>
-      <Image src={headerIcon} width={50} height={50} />
-    </header>
-    <main className={styles.main}>{children}</main>
-    <Footer />
-  </>
-);
+const Layout = ({ children, logOut }) => {
+  const router = useRouter();
+  const isOnCommentsPage = router.pathname === "/comments";
+
+  return (
+    <>
+      <Head>
+        <title>Interactive comments section</title>
+      </Head>
+      <Header isOnCommentsPage={isOnCommentsPage} logOut={logOut} />
+      <main className={styles.main}>{children}</main>
+      <Footer />
+    </>
+  );
+};
 
 export default Layout;

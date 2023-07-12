@@ -14,6 +14,8 @@ class CommentsPage extends React.Component {
   }
 
   componentDidMount() {
+    this.usersStorage = JSON.parse(localStorage.getItem("users")) || [];
+
     if (this.state.user || this.isAnUserLoggedIn()) {
       this.setState({ canAccess: true });
     } else {
@@ -22,8 +24,7 @@ class CommentsPage extends React.Component {
   }
 
   isAnUserLoggedIn = () => {
-    const usersStorage = JSON.parse(localStorage.getItem("users")) || [];
-    const isAnUserLoggedIn = usersStorage.find(
+    const isAnUserLoggedIn = this.usersStorage.find(
       (userStorage) => userStorage.isLoggedIn
     );
 
@@ -34,9 +35,21 @@ class CommentsPage extends React.Component {
     return !!isAnUserLoggedIn;
   };
 
+  logOut = () => {
+    const users = this.usersStorage.map((user) => {
+      if (user.username === this.state.user) {
+        user.isLoggedIn = false;
+      }
+      return user;
+    });
+
+    localStorage.setItem("users", JSON.stringify(users));
+    this.props.router.push("/");
+  };
+
   render() {
     return (
-      <Layout>
+      <Layout logOut={this.logOut}>
         {this.state.canAccess ? (
           <App user={this.state.user} />
         ) : (

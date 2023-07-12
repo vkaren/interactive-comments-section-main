@@ -1,5 +1,4 @@
 import React, { createRef } from "react";
-import Link from "next/link";
 import { withRouter } from "next/router";
 import styles from "./styles.module.css";
 
@@ -10,6 +9,7 @@ class ForgotPassword extends React.Component {
       recoveryPasswordError: "",
     };
     this.form = createRef();
+    this.userStorage = JSON.parse(localStorage.getItem("users")) || [];
   }
 
   recoveryPassword = (e) => {
@@ -41,11 +41,10 @@ class ForgotPassword extends React.Component {
   };
 
   setNewPassword = ({ userStorage, passwordInput }) => {
-    const users = JSON.parse(localStorage.getItem("users"));
-
-    users.map((user) => {
+    const users = this.userStorage.map((user) => {
       if (user.username === userStorage.username) {
         user.password = passwordInput;
+        user.isLoggedIn = true;
       }
       return user;
     });
@@ -54,9 +53,9 @@ class ForgotPassword extends React.Component {
   };
 
   isUserCreated = (username) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    return users.filter((user) => user.username === username)[0] || {};
+    return (
+      this.userStorage.filter((user) => user.username === username)[0] || {}
+    );
   };
 
   validateForm = ({ usernameInput, passwordInput, userStorage }) => {

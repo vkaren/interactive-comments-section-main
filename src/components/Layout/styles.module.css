@@ -1,15 +1,8 @@
-.header {
-  position: fixed;
-  width: 100%;
-  padding: 0.5rem 0;
-  text-align: center;
-  border: 1px solid var(--light-gray);
-  background: var(--white);
-}
 .main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   margin: 12rem 0;
 }

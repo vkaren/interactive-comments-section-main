@@ -4,6 +4,7 @@
   align-items: flex-end;
   gap: 2rem;
   width: 94%;
+  min-width: 320px;
   padding-left: 2rem;
   border-left: 1px solid var(--light-grayish-blue);
 }

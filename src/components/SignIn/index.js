@@ -10,6 +10,7 @@ class SignIn extends React.Component {
       loginError: "",
     };
     this.form = createRef();
+    this.usersStorage = JSON.parse(localStorage.getItem("users")) || [];
   }
 
   logIn = (e) => {
@@ -28,6 +29,15 @@ class SignIn extends React.Component {
     });
 
     if (canLogin) {
+      const users = this.usersStorage.map((user) => {
+        if (user.username === userStorage.username) {
+          user.isLoggedIn = true;
+        }
+        return user;
+      });
+
+      localStorage.setItem("users", JSON.stringify(users));
+
       this.props.router.push(
         {
           pathname: "/comments",

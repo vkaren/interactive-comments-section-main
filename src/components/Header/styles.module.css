@@ -1,0 +1,32 @@
+.header {
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  padding: 0.5rem 0;
+  text-align: center;
+  border: 1px solid var(--light-gray);
+  background: var(--white);
+}
+
+/* If it is the comments page */
+.header.comments_page {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comments_page .header_logo {
+  margin-left: 3rem;
+}
+.comments_page .comments_page__logout-btn {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 5rem;
+  font-weight: bold;
+  border: none;
+  color: var(--moderate-blue);
+  background: transparent;
+  cursor: pointer;
+}
+.logout-btn_text {
+  margin-left: 0.5rem;
+}
