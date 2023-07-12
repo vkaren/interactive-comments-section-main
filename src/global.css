@@ -38,3 +38,7 @@ body {
   align-items: center;
   min-height: inherit;
 }
+
+button:active {
+  opacity: 0.5;
+}
