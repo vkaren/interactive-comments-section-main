@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "@components/Layout";
-import Comments from "@components/Comments";
+import CommentThread from "@components/CommentThread";
 import { withRouter } from "next/router";
 import FormSkeleton from "@components/FormSkeleton";
 
@@ -28,7 +28,7 @@ class CommentsPage extends React.Component {
     );
 
     if (!this.state.user && isAnUserLoggedIn) {
-      this.setState({ user: isAnUserLoggedIn });
+      this.setState({ user: isAnUserLoggedIn.username });
     }
 
     return !!isAnUserLoggedIn;
@@ -38,7 +38,7 @@ class CommentsPage extends React.Component {
     return (
       <Layout>
         {this.state.canAccess ? (
-          <Comments user={this.state.user} />
+          <CommentThread user={this.state.user} />
         ) : (
           <FormSkeleton />
         )}
