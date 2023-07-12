@@ -1,8 +1,8 @@
 import React from "react";
 import Layout from "@components/Layout";
-import CommentThread from "@components/CommentThread";
-import { withRouter } from "next/router";
 import FormSkeleton from "@components/FormSkeleton";
+import App from "app";
+import { withRouter } from "next/router";
 
 class CommentsPage extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class CommentsPage extends React.Component {
     return (
       <Layout>
         {this.state.canAccess ? (
-          <CommentThread user={this.state.user} />
+          <App user={this.state.user} />
         ) : (
           <FormSkeleton />
         )}
