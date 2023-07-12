@@ -1,11 +1,10 @@
-/* Comment container */
+/* Comment */
 .comment {
   display: grid;
-  grid-template-columns: 10% 90%;
+  grid-template-columns: repeat(2, auto) repeat(2, 3rem);
   align-content: center;
   width: 100%;
   padding: 2rem;
-  margin-bottom: 2rem;
   border-radius: 5px;
   background: var(--white);
 }
@@ -24,14 +23,23 @@
   margin: 0 1rem;
   font-weight: bold;
 }
+.comment_current-user {
+  padding: 0.2rem 0.4rem;
+  margin-right: 1.2rem;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: bold;
+  color: var(--white);
+  background: var(--moderate-blue);
+}
 
-/* Comment reply button */
-.comment_reply-btn {
+/* Comment buttons */
+.comment_reply-btn,
+.comment_delete-btn,
+.comment_edit-btn {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  grid-column: 2/3;
-  grid-row: 1/2;
   width: 60px;
   margin-right: 0;
   margin-left: auto;
@@ -41,13 +49,25 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  grid-column: 3/4;
+  grid-row: 1/2;
+}
+.comment_delete-btn {
+  grid-column: 2/3;
+  color: var(--soft-red);
 }
 
 /* Comment text */
 .comment_text {
+  grid-column: 2/5;
+  grid-row: 2/4;
   margin: 1.5rem 1rem;
   font-size: 1.5rem;
   color: var(--dark-blue);
+}
+.comment_text_replyingTo {
+  font-weight: bold;
+  color: var(--moderate-blue);
 }
 
 /* Comment likes */
@@ -58,11 +78,11 @@
   justify-content: space-between;
   grid-column: 1/2;
   grid-row: 1/3;
-  align-self: center;
+  align-self: self-start;
   justify-self: self-start;
   width: 100%;
   height: 100%;
-  max-height: 6rem;
+  max-height: 8rem;
   max-width: 3rem;
   min-width: 3rem;
   margin-right: 1rem;
@@ -82,17 +102,18 @@
   filter: hue-rotate(50deg);
 }
 .comment_likes {
+  font-size: 1.2rem;
   font-weight: bold;
   color: var(--grayish-blue);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .comment_header {
-    grid-column: 1/3;
+    grid-column: 1/4;
     grid-row: 1/2;
   }
   .comment_text {
-    grid-column: 1/3;
+    grid-column: 1/5;
     grid-row: 2/3;
   }
   .comment_like {
@@ -104,8 +125,9 @@
     grid-row: 3/4;
   }
 
-  .comment_reply-btn {
-    grid-column: 2/3;
+  .comment_reply-btn,
+  .comment_delete-btn,
+  .comment_edit-btn {
     grid-row: 3/4;
   }
 }
