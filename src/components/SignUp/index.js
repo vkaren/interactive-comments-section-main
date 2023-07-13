@@ -26,7 +26,14 @@ class SignUp extends React.Component {
     });
 
     if (canCreateAnAccount) {
-      const user = { username, password, isLoggedIn: true };
+      const user = {
+        username,
+        password,
+        isLoggedIn: true,
+        image: {
+          png: "/avatars/avatar-default-user.png",
+        },
+      };
       createdUsers.push(user);
 
       const usersStorage = JSON.stringify(createdUsers);
@@ -35,7 +42,7 @@ class SignUp extends React.Component {
       this.props.router.push(
         {
           pathname: "/comments",
-          query: { username: user.username },
+          query: { user },
         },
         "/comments"
       );

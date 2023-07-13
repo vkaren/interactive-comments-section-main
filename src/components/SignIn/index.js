@@ -44,7 +44,7 @@ class SignIn extends React.Component {
       this.props.router.push(
         {
           pathname: "/comments",
-          query: { username: userStorage.username },
+          query: { username: userStorage },
         },
         "/comments"
       );

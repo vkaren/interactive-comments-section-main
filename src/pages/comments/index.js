@@ -9,7 +9,7 @@ class CommentsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.router.query.username,
+      user: this.props.router.query.user,
       canAccess: false,
     };
   }
@@ -35,7 +35,7 @@ class CommentsPage extends React.Component {
     );
 
     if (!this.state.user && isAnUserLoggedIn) {
-      this.setState({ user: isAnUserLoggedIn.username });
+      this.setState({ user: isAnUserLoggedIn });
     }
 
     return !!isAnUserLoggedIn;
@@ -43,7 +43,7 @@ class CommentsPage extends React.Component {
 
   logOut = () => {
     const users = this.usersStorage.map((user) => {
-      if (user.username === this.state.user) {
+      if (user.username === this.state.user.username) {
         user.isLoggedIn = false;
       }
       return user;
