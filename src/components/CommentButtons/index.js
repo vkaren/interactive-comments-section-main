@@ -4,14 +4,19 @@ import DeleteIcon from "@icons/icon-delete.svg";
 import EditIcon from "@icons/icon-edit.svg";
 import styles from "./styles.module.css";
 
-const CommentButtons = ({ currentUser, user, onClickReplyBtn }) =>
+const CommentButtons = ({
+  currentUser,
+  user,
+  onClickReplyBtn,
+  onClickEditBtn,
+}) =>
   currentUser.username === user.username ? (
     <>
       <button className={styles["comment_delete-btn"]}>
         <DeleteIcon />
         <span>Delete</span>
       </button>
-      <button className={styles["comment_edit-btn"]}>
+      <button className={styles["comment_edit-btn"]} onClick={onClickEditBtn}>
         <EditIcon />
         <span>Edit</span>
       </button>

@@ -4,6 +4,7 @@ import CommentButtons from "@components/CommentButtons";
 import CommentLike from "@components/CommentLike";
 import CommentText from "@components/CommentText";
 import AddComment from "@components/AddComment";
+import EditComment from "@components/EditComment";
 import { getDateFormat } from "@utils/getDateFormat";
 import styles from "./styles.module.css";
 
@@ -12,6 +13,7 @@ class Comment extends React.Component {
     super(props);
     this.state = {
       isReplying: false,
+      isEditing: false,
       dateFormat: null,
       timerDelayDateFormat: {},
     };
@@ -21,6 +23,12 @@ class Comment extends React.Component {
       replyingTo: this.props.user.username,
       replyingToCommentId: this.props.replyingToCommentId || this.props.id,
       hideAddCommentBox: this.hideAddCommentBox,
+    };
+
+    // Info needed to edit this comment or reply
+    this.commentToEdit = {
+      id: this.props.id,
+      hideEditState: this.hideEditState,
     };
   }
 
@@ -63,6 +71,18 @@ class Comment extends React.Component {
     this.setState({ isReplying });
   };
 
+  hideEditState = () => {
+    const isEditing = false;
+
+    this.setState({ isEditing });
+  };
+
+  onClickEditBtn = () => {
+    const isEditing = !this.state.isEditing;
+
+    this.setState({ isEditing });
+  };
+
   render() {
     return (
       <>
@@ -78,14 +98,24 @@ class Comment extends React.Component {
             currentUser={this.props.currentUser}
             user={this.props.user}
             onClickReplyBtn={this.onClickReplyBtn}
+            onClickEditBtn={this.onClickEditBtn}
           />
 
           <CommentLike score={this.props.score} />
 
-          <CommentText
-            replyingTo={this.props.replyingTo}
-            content={this.props.content}
-          />
+          {this.state.isEditing ? (
+            <EditComment
+              content={this.props.content}
+              commentToEdit={this.commentToEdit}
+              onEditComment={this.props.onEditComment}
+              onWritingComment={this.props.onWritingComment}
+            />
+          ) : (
+            <CommentText
+              replyingTo={this.props.replyingTo}
+              content={this.props.content}
+            />
+          )}
         </div>
 
         {this.state.isReplying && (

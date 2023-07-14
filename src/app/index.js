@@ -8,7 +8,7 @@ class App extends React.Component {
     this.state = {
       currentUser: this.props.user,
       comments: JSON.parse(localStorage.getItem("comments")),
-      commentContentToAdd: "",
+      commentContent: null,
       lastCommentId: null,
     };
   }
@@ -25,38 +25,53 @@ class App extends React.Component {
     ).length;
   };
 
-  onWritingComment = (replyComment = null) => {
+  debounce = (callback, wait) => {
     /**
-     * Debounce function to update commentContentToAdd only when the user stop typing
-     * and call onAddReply or onAddComment if the Enter key is pressed
-     *
-     * @params {object} replyComment, required when it's a reply comment
+     * Debounce function used for add or update a comment content
+     * only when the user stop typing
      */
-
     let timer;
 
     return (e) => {
       if (timer) {
         clearTimeout(timer);
       }
+      timer = setTimeout(() => callback(e), wait);
+    };
+  };
 
-      const commentContentToAdd = e.currentTarget.value;
+  onWritingComment = ({ replyComment = null, commentToEdit = null }) => {
+    /**
+     * Use a debounce function to update commentContent
+     * and call onAddReply, onAddComment or onEditComment if the Enter key is pressed
+     *
+     * @params {object} replyComment, required when it's a reply comment
+     */
+
+    const updateCommentContent = (e) => {
+      const commentContent = e.target.value;
       const isEnterPressed = e.key === "Enter";
 
-      timer = setTimeout(() => {
-        this.setState({ commentContentToAdd }, () => {
-          if (isEnterPressed) {
-            replyComment ? this.onAddReply(replyComment) : this.onAddComment();
+      this.setState({ commentContent }, () => {
+        if (isEnterPressed) {
+          if (replyComment) {
+            this.onAddReply(replyComment);
+          } else if (commentToEdit) {
+            this.onEditComment(commentToEdit);
+          } else {
+            this.onAddComment();
           }
-        });
-      }, 500);
+        }
+      });
     };
+
+    return this.debounce(updateCommentContent, 500);
   };
 
   onAddComment = () => {
     const commentToAdd = {
       id: this.state.lastCommentId + 1,
-      content: this.state.commentContentToAdd,
+      content: this.state.commentContent,
       createdAt: Date.now(),
       score: 0,
       user: this.state.currentUser,
@@ -73,7 +88,7 @@ class App extends React.Component {
   onAddReply = (replyComment) => {
     const commentToAdd = {
       id: this.state.lastCommentId + 1,
-      content: this.state.commentContentToAdd,
+      content: this.state.commentContent,
       createdAt: Date.now(),
       score: 0,
       user: this.state.currentUser,
@@ -95,15 +110,49 @@ class App extends React.Component {
     replyComment.hideAddCommentBox();
   };
 
-  updateComments({ comments, lastCommentId }) {
-    localStorage.setItem("comments", JSON.stringify(comments));
-    this.setState({ comments, lastCommentId });
-  }
+  onEditComment = (commentToEdit) => {
+    const newCommentContent = this.state.commentContent;
 
-  onEditComment = () => {};
+    if (newCommentContent) {
+      const comments = this.state.comments;
+
+      for (let i = 0; i < comments.length; i++) {
+        const comment = comments[i];
+        const isAComment = comment.id == commentToEdit.id;
+
+        if (isAComment) {
+          comment.content = newCommentContent;
+          break;
+        }
+
+        for (let i = 0; i < comment.replies.length; i++) {
+          const replyToEdit = comment.replies[i];
+          const isAReply = replyToEdit.id == commentToEdit.id;
+
+          if (isAReply) {
+            replyToEdit.content = newCommentContent;
+            break;
+          }
+        }
+      }
+      this.updateComments({ comments });
+    }
+
+    commentToEdit.hideEditState();
+  };
+
   onDeleteComment = () => {};
   onLikeComment = () => {};
 
+  updateComments({ comments, lastCommentId }) {
+    localStorage.setItem("comments", JSON.stringify(comments));
+
+    if (lastCommentId) {
+      this.setState({ comments, lastCommentId, commentContent: null });
+    } else {
+      this.setState({ comments, commentContent: null });
+    }
+  }
   render() {
     return (
       <>
@@ -112,6 +161,7 @@ class App extends React.Component {
           comments={this.state.comments}
           onAddReply={this.onAddReply}
           onWritingComment={this.onWritingComment}
+          onEditComment={this.onEditComment}
         />
         <AddComment
           currentUser={this.props.user}

@@ -1,7 +1,7 @@
 /* Comment */
 .comment {
   display: grid;
-  grid-template-columns: 7% calc(90% - 120px) repeat(2, 60px);
+  grid-template-columns: 7% calc(90% - 50px) repeat(2, 25px);
   align-content: center;
   width: 100%;
   padding: 2rem;

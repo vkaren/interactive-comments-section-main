@@ -14,18 +14,32 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  grid-column: 4/5;
   grid-row: 1/2;
+  grid-column: 3/4;
 }
+
 .comment_delete-btn {
-  grid-column: 2/4;
+  grid-column: 2/3;
   color: var(--soft-red);
 }
 
 @media (max-width: 650px) {
-  .comment_reply-btn,
+  .comment_reply-btn {
+    grid-row: 3/4;
+  }
   .comment_delete-btn,
   .comment_edit-btn {
-    grid-row: 3/4;
+    width: 25px;
+    grid-row: 1/2;
+  }
+  .comment_delete-btn {
+    grid-column: 3/4;
+  }
+  .comment_edit-btn {
+    grid-column: 4/5;
+  }
+  .comment_delete-btn span,
+  .comment_edit-btn span {
+    display: none;
   }
 }

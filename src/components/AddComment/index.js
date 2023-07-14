@@ -31,7 +31,7 @@ const AddComment = ({
         className={styles["add-comment_textarea"]}
         placeholder="Add a comment..."
         onKeyDown={preventDefaultBehaviourEnter}
-        onKeyUp={onWritingComment(replyComment)}
+        onKeyUp={onWritingComment({ replyComment })}
       ></textarea>
 
       <button
