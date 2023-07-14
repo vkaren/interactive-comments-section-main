@@ -1,0 +1,31 @@
+/* Comment buttons */
+.comment_reply-btn,
+.comment_delete-btn,
+.comment_edit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 60px;
+  margin-right: 0;
+  margin-left: auto;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--moderate-blue);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  grid-column: 4/5;
+  grid-row: 1/2;
+}
+.comment_delete-btn {
+  grid-column: 2/4;
+  color: var(--soft-red);
+}
+
+@media (max-width: 650px) {
+  .comment_reply-btn,
+  .comment_delete-btn,
+  .comment_edit-btn {
+    grid-row: 3/4;
+  }
+}

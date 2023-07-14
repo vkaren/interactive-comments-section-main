@@ -1,12 +1,10 @@
 import React from "react";
-import Image from "next/image";
+import CommentHeader from "@components/CommentHeader";
+import CommentButtons from "@components/CommentButtons";
+import CommentLike from "@components/CommentLike";
+import CommentText from "@components/CommentText";
 import AddComment from "@components/AddComment";
 import { getDateFormat } from "@utils/getDateFormat";
-import PlusIcon from "@icons/icon-plus.svg";
-import MinusIcon from "@icons/icon-minus.svg";
-import ReplyIcon from "@icons/icon-reply.svg";
-import DeleteIcon from "@icons/icon-delete.svg";
-import EditIcon from "@icons/icon-edit.svg";
 import styles from "./styles.module.css";
 
 class Comment extends React.Component {
@@ -69,65 +67,25 @@ class Comment extends React.Component {
     return (
       <>
         <div id={this.props.id} className={styles["comment"]}>
-          <header className={styles["comment_header"]}>
-            <div className={styles["comment_profile-photo"]}>
-              <Image src={this.props.user.image.png} width={25} height={25} />
-            </div>
+          <CommentHeader
+            currentUser={this.props.currentUser}
+            user={this.props.user}
+            dateFormat={this.state.dateFormat}
+            createdAt={this.props.createdAt}
+          />
 
-            <span className={styles["comment_username"]}>
-              {this.props.user.username}
-            </span>
+          <CommentButtons
+            currentUser={this.props.currentUser}
+            user={this.props.user}
+            onClickReplyBtn={this.onClickReplyBtn}
+          />
 
-            {this.props.currentUser.username === this.props.user.username && (
-              <span className={styles["comment_current-user"]}>you</span>
-            )}
+          <CommentLike score={this.props.score} />
 
-            <span className={styles["comment_time"]}>
-              {this.state.dateFormat || this.props.createdAt}
-            </span>
-          </header>
-
-          {this.props.currentUser.username === this.props.user.username ? (
-            <>
-              <button className={styles["comment_delete-btn"]}>
-                <DeleteIcon />
-                <span>Delete</span>
-              </button>
-              <button className={styles["comment_edit-btn"]}>
-                <EditIcon />
-                <span>Edit</span>
-              </button>
-            </>
-          ) : (
-            <button
-              className={styles["comment_reply-btn"]}
-              onClick={this.onClickReplyBtn}
-            >
-              <ReplyIcon />
-              <span>Reply</span>
-            </button>
-          )}
-
-          <div className={styles["comment_like"]}>
-            <button className={styles["comment_like-up"]}>
-              <PlusIcon />
-            </button>
-
-            <span className={styles["comment_likes"]}>{this.props.score}</span>
-
-            <button className={styles["comment_like-down"]}>
-              <MinusIcon />
-            </button>
-          </div>
-
-          <div className={styles["comment_text"]}>
-            <p>
-              <span className={styles["comment_text_replyingTo"]}>
-                {this.props.replyingTo && `@${this.props.replyingTo} `}
-              </span>
-              {this.props.content}
-            </p>
-          </div>
+          <CommentText
+            replyingTo={this.props.replyingTo}
+            content={this.props.content}
+          />
         </div>
 
         {this.state.isReplying && (

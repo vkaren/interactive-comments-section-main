@@ -1,7 +1,7 @@
 /* Add comment container */
 .add-comment_section {
   display: grid;
-  grid-template-columns: 3rem calc(75% - 3rem) auto;
+  grid-template-columns: 3rem calc(75% - 4rem) auto;
   align-items: flex-start;
   justify-content: space-between;
   width: 75%;
@@ -14,7 +14,7 @@
 }
 
 /* Add reply container */
-.add-comment_reply_section {
+.add-comment_section.add-comment_reply_section {
   width: 100%;
 }
 
