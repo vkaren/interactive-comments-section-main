@@ -2,21 +2,44 @@ import React from "react";
 import Image from "next/image";
 import styles from "./styles.module.css";
 
-import avatar from "@avatars/image-juliusomo.png";
+const AddComment = ({
+  currentUser,
+  onWritingComment,
+  onAddComment,
+  onAddReply,
+  replyComment = null,
+}) => {
+  const preventDefaultBehaviourEnter = (e) => {
+    if (e.key === "Enter") e.preventDefault();
+  };
 
-const AddComment = () => {
+  const onAddCommentOrReply = () => {
+    replyComment ? onAddReply(replyComment) : onAddComment();
+  };
+
   return (
-    <section className={styles["add-comment_section"]}>
+    <section
+      className={`${styles["add-comment_section"]} ${
+        replyComment && styles["add-comment_reply_section"]
+      }`}
+    >
       <div className={styles["add-comment_profile-photo"]}>
-        <Image src={avatar} width={25} height={25} />
+        <Image src={currentUser.image.png} width={25} height={25} />
       </div>
 
       <textarea
         className={styles["add-comment_textarea"]}
         placeholder="Add a comment..."
+        onKeyDown={preventDefaultBehaviourEnter}
+        onKeyUp={onWritingComment(replyComment)}
       ></textarea>
 
-      <button className={styles["add-comment_send-btn"]}>SEND</button>
+      <button
+        className={styles["add-comment_send-btn"]}
+        onClick={onAddCommentOrReply}
+      >
+        {replyComment ? "REPLY" : "SEND"}
+      </button>
     </section>
   );
 };

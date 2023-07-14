@@ -1,3 +1,4 @@
+/* Add comment container */
 .add-comment_section {
   display: grid;
   grid-template-columns: 3rem calc(75% - 3rem) auto;
@@ -12,11 +13,18 @@
   background: var(--white);
 }
 
+/* Add reply container */
+.add-comment_reply_section {
+  width: 100%;
+}
+
+/* Add comment container - User avatar */
 .add-comment_profile-photo {
   grid-row: 1/2;
   grid-column: 1/2;
 }
 
+/* Add comment container - Textarea */
 .add-comment_textarea {
   width: 100%;
   height: 7rem;
@@ -34,6 +42,7 @@
   outline: 2px solid var(--moderate-blue);
 }
 
+/* Add comment container - Send comment button */
 .add-comment_send-btn {
   padding: 1rem 2rem;
   font-size: 1.2rem;

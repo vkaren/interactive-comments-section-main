@@ -2,7 +2,12 @@ import React from "react";
 import CommentContainer from "@components/CommentContainer";
 import styles from "./styles.module.css";
 
-const CommentThread = ({ comments, currentUser }) => {
+const CommentThread = ({
+  currentUser,
+  comments,
+  onAddReply,
+  onWritingComment,
+}) => {
   return (
     <section className={styles["comments_section"]}>
       {comments.map((comment) => (
@@ -15,6 +20,8 @@ const CommentThread = ({ comments, currentUser }) => {
           createdAt={comment.createdAt}
           score={comment.score}
           replies={comment.replies}
+          onAddReply={onAddReply}
+          onWritingComment={onWritingComment}
         />
       ))}
     </section>

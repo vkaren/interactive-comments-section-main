@@ -1,7 +1,7 @@
 /* Comment */
 .comment {
   display: grid;
-  grid-template-columns: repeat(2, auto) repeat(2, 3rem);
+  grid-template-columns: 7% calc(90% - 120px) repeat(2, 60px);
   align-content: center;
   width: 100%;
   padding: 2rem;
@@ -20,8 +20,25 @@
   color: var(--dark-blue);
 }
 .comment_username {
+  max-width: 70px;
   margin: 0 1rem;
   font-weight: bold;
+  overflow-x: scroll;
+  scrollbar-width: none;
+}
+.comment_username::-webkit-scrollbar {
+  display: none;
+}
+.comment_username:hover {
+  scrollbar-width: thin;
+}
+.comment_username:hover::-webkit-scrollbar {
+  display: block;
+  height: 5px;
+  background: var(--light-gray);
+}
+.comment_username:hover::-webkit-scrollbar-thumb {
+  background: var(--light-grayish-blue);
 }
 .comment_current-user {
   padding: 0.2rem 0.4rem;
@@ -31,6 +48,10 @@
   font-weight: bold;
   color: var(--white);
   background: var(--moderate-blue);
+}
+.comment_time {
+  width: 100%;
+  max-width: 90px;
 }
 
 /* Comment buttons */
@@ -49,11 +70,11 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  grid-column: 3/4;
+  grid-column: 4/5;
   grid-row: 1/2;
 }
 .comment_delete-btn {
-  grid-column: 2/3;
+  grid-column: 2/4;
   color: var(--soft-red);
 }
 
@@ -109,7 +130,7 @@
 
 @media (max-width: 650px) {
   .comment_header {
-    grid-column: 1/4;
+    grid-column: 1/5;
     grid-row: 1/2;
   }
   .comment_text {

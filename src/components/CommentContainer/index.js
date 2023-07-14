@@ -11,6 +11,8 @@ const CommentContainer = ({
   createdAt,
   score,
   replies,
+  onAddReply,
+  onWritingComment,
 }) => (
   <article className={styles["comment__container"]}>
     <Comment
@@ -20,8 +22,16 @@ const CommentContainer = ({
       content={content}
       createdAt={createdAt}
       score={score}
+      onAddReply={onAddReply}
+      onWritingComment={onWritingComment}
     />
-    <Replies currentUser={currentUser} replies={replies} />
+    <Replies
+      currentUser={currentUser}
+      replyingToCommentId={id}
+      replies={replies}
+      onAddReply={onAddReply}
+      onWritingComment={onWritingComment}
+    />
   </article>
 );
 
