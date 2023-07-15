@@ -1,6 +1,7 @@
 import React from "react";
 import AddComment from "@components/AddComment";
 import CommentThread from "@components/CommentThread";
+import DeleteComment from "@components/DeleteComment";
 
 class App extends React.Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class App extends React.Component {
       comments: JSON.parse(localStorage.getItem("comments")),
       commentContent: null,
       lastCommentId: null,
+      isDeleting: false,
+      commentToDelete: null,
     };
     this.currentUser = this.props.user;
   }
@@ -124,7 +127,26 @@ class App extends React.Component {
     commentToEdit.hideEditState();
   };
 
-  onDeleteComment = () => {};
+  onClickDelete = (commentId) => {
+    this.setState({ isDeleting: true, commentToDelete: commentId });
+  };
+
+  onDeleteComment = () => {
+    const deleteComment = ({ comments, index }) => {
+      comments.splice(index, 1);
+    };
+
+    this.searchComment({
+      commentId: this.state.commentToDelete,
+      callback: deleteComment,
+    });
+
+    this.setState({ isDeleting: false, commentToDelete: null });
+  };
+
+  onCancelDeleteComment = () => {
+    this.setState({ isDeleting: false });
+  };
 
   onVoteComment = ({ comment, vote }) => {
     let newScore = comment.score;
@@ -144,29 +166,36 @@ class App extends React.Component {
     this.saveVotedComment({ commentId: comment.id, vote });
   };
 
-  searchAndUpdateComment = ({ commentId, propertyToUpdate, newValue }) => {
+  searchComment = ({ commentId, callback }) => {
     const comments = this.state.comments;
 
     for (let i = 0; i < comments.length; i++) {
       const comment = comments[i];
       const isAComment = comment.id == commentId;
+
       if (isAComment) {
-        comment[propertyToUpdate] = newValue;
+        callback({ comment, comments, index: i });
         break;
       }
 
-      for (let i = 0; i < comment.replies.length; i++) {
-        const replyToEdit = comment.replies[i];
-        const isAReply = replyToEdit.id == commentId;
+      for (let j = 0; j < comment.replies.length; j++) {
+        const reply = comment.replies[j];
+        const isAReply = reply.id == commentId;
 
         if (isAReply) {
-          replyToEdit[propertyToUpdate] = newValue;
+          callback({ comment: reply, comments: comment.replies, index: j });
           break;
         }
       }
     }
-
     this.updateComments({ comments });
+  };
+
+  searchAndUpdateComment = ({ commentId, propertyToUpdate, newValue }) => {
+    const updateCommentContent = ({ comment }) =>
+      (comment[propertyToUpdate] = newValue);
+
+    this.searchComment({ commentId, callback: updateCommentContent });
   };
 
   saveVotedComment = ({ commentId, vote }) => {
@@ -216,12 +245,19 @@ class App extends React.Component {
           onWritingComment={this.onWritingComment}
           onEditComment={this.onEditComment}
           onVoteComment={this.onVoteComment}
+          onClickDelete={this.onClickDelete}
         />
         <AddComment
           currentUser={this.currentUser}
           onAddComment={this.onAddComment}
           onWritingComment={this.onWritingComment}
         />
+        {this.state.isDeleting && (
+          <DeleteComment
+            onDeleteComment={this.onDeleteComment}
+            onCancelDeleteComment={this.onCancelDeleteComment}
+          />
+        )}
       </>
     );
   }

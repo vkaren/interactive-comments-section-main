@@ -38,7 +38,9 @@ body {
   align-items: center;
   min-height: inherit;
 }
-
+button {
+  font-family: "Rubik", sans-serif;
+}
 button:active {
   opacity: 0.5;
 }

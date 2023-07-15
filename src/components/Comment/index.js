@@ -95,10 +95,12 @@ class Comment extends React.Component {
           />
 
           <CommentButtons
+            id={this.props.id}
             currentUser={this.props.currentUser}
             user={this.props.user}
             onClickReplyBtn={this.onClickReplyBtn}
             onClickEditBtn={this.onClickEditBtn}
+            onClickDelete={this.props.onClickDelete}
           />
 
           <CommentLike

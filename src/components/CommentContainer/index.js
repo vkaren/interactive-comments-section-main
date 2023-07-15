@@ -15,6 +15,7 @@ const CommentContainer = ({
   onWritingComment,
   onEditComment,
   onVoteComment,
+  onClickDelete,
 }) => (
   <article className={styles["comment__container"]}>
     <Comment
@@ -28,6 +29,7 @@ const CommentContainer = ({
       onWritingComment={onWritingComment}
       onEditComment={onEditComment}
       onVoteComment={onVoteComment}
+      onClickDelete={onClickDelete}
     />
     <Replies
       currentUser={currentUser}
@@ -37,6 +39,7 @@ const CommentContainer = ({
       onWritingComment={onWritingComment}
       onEditComment={onEditComment}
       onVoteComment={onVoteComment}
+      onClickDelete={onClickDelete}
     />
   </article>
 );

@@ -5,14 +5,19 @@ import EditIcon from "@icons/icon-edit.svg";
 import styles from "./styles.module.css";
 
 const CommentButtons = ({
+  id,
   currentUser,
   user,
   onClickReplyBtn,
   onClickEditBtn,
+  onClickDelete,
 }) =>
   currentUser.username === user.username ? (
     <>
-      <button className={styles["comment_delete-btn"]}>
+      <button
+        className={styles["comment_delete-btn"]}
+        onClick={() => onClickDelete(id)}
+      >
         <DeleteIcon />
         <span>Delete</span>
       </button>

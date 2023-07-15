@@ -1,0 +1,59 @@
+/* Delete comment overlay */
+.delete-comment_overlay {
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0000004f;
+}
+
+/* Delete comment section */
+.delete-comment_section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 8;
+  width: 35%;
+  height: fit-content;
+  max-width: 350px;
+  min-width: 300px;
+  margin: auto;
+  padding: 3rem;
+  border-radius: 5px;
+  color: var(--dark-blue);
+  background: var(--white);
+}
+.delete-comment_section h2 {
+  font-size: 1.8rem;
+}
+.delete-comment_section p {
+  margin: 1.5rem 0;
+  font-size: 1.5rem;
+}
+
+/* Delete comment options container */
+.delete-comment_options {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Delete comment options */
+.delete-comment_options button {
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.delete-comment_cancel-btn {
+  background: var(--grayish-blue);
+}
+.delete-comment_accept-btn {
+  background: var(--soft-red);
+}
