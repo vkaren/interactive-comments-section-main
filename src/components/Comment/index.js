@@ -1,8 +1,8 @@
 import React from "react";
-import CommentHeader from "@components/CommentHeader";
-import CommentButtons from "@components/CommentButtons";
-import CommentLike from "@components/CommentLike";
-import CommentText from "@components/CommentText";
+import CommentHeader from "@components/Comment/CommentHeader";
+import CommentButtons from "@components/Comment/CommentButtons";
+import CommentLike from "@components/Comment/CommentLike";
+import CommentText from "@components/Comment/CommentText";
 import AddComment from "@components/AddComment";
 import EditComment from "@components/EditComment";
 import { getDateFormat } from "@utils/getDateFormat";
