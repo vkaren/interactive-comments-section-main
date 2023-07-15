@@ -9,6 +9,7 @@ const Replies = ({
   onAddReply,
   onWritingComment,
   onEditComment,
+  onVoteComment,
 }) => (
   <section className={styles["replies_section"]}>
     {replies.map((reply) => (
@@ -25,6 +26,7 @@ const Replies = ({
         onAddReply={onAddReply}
         onWritingComment={onWritingComment}
         onEditComment={onEditComment}
+        onVoteComment={onVoteComment}
       />
     ))}
   </section>

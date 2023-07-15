@@ -33,6 +33,7 @@ class SignUp extends React.Component {
         image: {
           png: "/avatars/avatar-default-user.png",
         },
+        votedComments: [],
       };
       createdUsers.push(user);
 

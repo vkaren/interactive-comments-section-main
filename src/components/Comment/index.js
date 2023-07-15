@@ -101,7 +101,12 @@ class Comment extends React.Component {
             onClickEditBtn={this.onClickEditBtn}
           />
 
-          <CommentLike score={this.props.score} />
+          <CommentLike
+            id={this.props.id}
+            currentUser={this.props.currentUser}
+            score={this.props.score}
+            onVoteComment={this.props.onVoteComment}
+          />
 
           {this.state.isEditing ? (
             <EditComment

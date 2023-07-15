@@ -8,6 +8,7 @@ const CommentThread = ({
   onAddReply,
   onWritingComment,
   onEditComment,
+  onVoteComment,
 }) => {
   return (
     <section className={styles["comments_section"]}>
@@ -24,6 +25,7 @@ const CommentThread = ({
           onAddReply={onAddReply}
           onWritingComment={onWritingComment}
           onEditComment={onEditComment}
+          onVoteComment={onVoteComment}
         />
       ))}
     </section>

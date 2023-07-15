@@ -18,7 +18,9 @@
   border-radius: 5px;
   background: var(--light-gray);
 }
-.comment_like button {
+
+/* Comment likes buttons */
+.comment_like-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -26,9 +28,12 @@
   background: transparent;
   cursor: pointer;
 }
-.comment_like button:hover svg path {
+.comment_like-btn:hover svg path,
+.comment_like-btn.active svg path {
   fill: var(--moderate-blue);
 }
+
+/* Comment likes score */
 .comment_likes {
   font-size: 1.2rem;
   font-weight: bold;

@@ -6,11 +6,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: this.props.user,
       comments: JSON.parse(localStorage.getItem("comments")),
       commentContent: null,
       lastCommentId: null,
     };
+    this.currentUser = this.props.user;
   }
 
   componentDidMount() {
@@ -74,7 +74,7 @@ class App extends React.Component {
       content: this.state.commentContent,
       createdAt: Date.now(),
       score: 0,
-      user: this.state.currentUser,
+      user: this.currentUser,
       replies: [],
     };
 
@@ -91,7 +91,7 @@ class App extends React.Component {
       content: this.state.commentContent,
       createdAt: Date.now(),
       score: 0,
-      user: this.state.currentUser,
+      user: this.currentUser,
       replyingTo: replyComment.replyingTo,
     };
 
@@ -114,35 +114,87 @@ class App extends React.Component {
     const newCommentContent = this.state.commentContent;
 
     if (newCommentContent) {
-      const comments = this.state.comments;
-
-      for (let i = 0; i < comments.length; i++) {
-        const comment = comments[i];
-        const isAComment = comment.id == commentToEdit.id;
-
-        if (isAComment) {
-          comment.content = newCommentContent;
-          break;
-        }
-
-        for (let i = 0; i < comment.replies.length; i++) {
-          const replyToEdit = comment.replies[i];
-          const isAReply = replyToEdit.id == commentToEdit.id;
-
-          if (isAReply) {
-            replyToEdit.content = newCommentContent;
-            break;
-          }
-        }
-      }
-      this.updateComments({ comments });
+      this.searchAndUpdateComment({
+        commentId: commentToEdit.id,
+        propertyToUpdate: "content",
+        newValue: newCommentContent,
+      });
     }
 
     commentToEdit.hideEditState();
   };
 
   onDeleteComment = () => {};
-  onLikeComment = () => {};
+
+  onVoteComment = ({ comment, vote }) => {
+    let newScore = comment.score;
+
+    if (vote === "upvote") {
+      newScore++;
+    } else {
+      newScore--;
+    }
+
+    this.searchAndUpdateComment({
+      commentId: comment.id,
+      propertyToUpdate: "score",
+      newValue: newScore,
+    });
+
+    this.saveVotedComment({ commentId: comment.id, vote });
+  };
+
+  searchAndUpdateComment = ({ commentId, propertyToUpdate, newValue }) => {
+    const comments = this.state.comments;
+
+    for (let i = 0; i < comments.length; i++) {
+      const comment = comments[i];
+      const isAComment = comment.id == commentId;
+      if (isAComment) {
+        comment[propertyToUpdate] = newValue;
+        break;
+      }
+
+      for (let i = 0; i < comment.replies.length; i++) {
+        const replyToEdit = comment.replies[i];
+        const isAReply = replyToEdit.id == commentId;
+
+        if (isAReply) {
+          replyToEdit[propertyToUpdate] = newValue;
+          break;
+        }
+      }
+    }
+
+    this.updateComments({ comments });
+  };
+
+  saveVotedComment = ({ commentId, vote }) => {
+    const users = JSON.parse(localStorage.getItem("users"));
+
+    const currentUser = users.find(
+      (user) => user.username === this.currentUser.username
+    );
+
+    const currentUserVotedComments = currentUser.votedComments;
+
+    for (let i = 0; i < currentUserVotedComments.length + 1; i++) {
+      const votedCommentSaved = currentUserVotedComments[i];
+
+      if (votedCommentSaved?.commentId === commentId) {
+        votedCommentSaved.vote = vote;
+        break;
+      } else if (i === currentUserVotedComments.length) {
+        currentUserVotedComments[i] = {
+          commentId,
+          vote,
+        };
+        break;
+      }
+    }
+
+    localStorage.setItem("users", JSON.stringify(users));
+  };
 
   updateComments({ comments, lastCommentId }) {
     localStorage.setItem("comments", JSON.stringify(comments));
@@ -153,18 +205,20 @@ class App extends React.Component {
       this.setState({ comments, commentContent: null });
     }
   }
+
   render() {
     return (
       <>
         <CommentThread
-          currentUser={this.props.user}
+          currentUser={this.currentUser}
           comments={this.state.comments}
           onAddReply={this.onAddReply}
           onWritingComment={this.onWritingComment}
           onEditComment={this.onEditComment}
+          onVoteComment={this.onVoteComment}
         />
         <AddComment
-          currentUser={this.props.user}
+          currentUser={this.currentUser}
           onAddComment={this.onAddComment}
           onWritingComment={this.onWritingComment}
         />
