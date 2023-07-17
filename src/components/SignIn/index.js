@@ -1,7 +1,8 @@
 import React, { createRef } from "react";
-import Link from "next/link";
+import Form from "@components/Form";
+import { getData, setData, getUser } from "@utils/myLocalStorage";
+import { getFormInputs } from "@utils/getFormInputs";
 import { withRouter } from "next/router";
-import styles from "./styles.module.css";
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -13,17 +14,14 @@ class SignIn extends React.Component {
   }
 
   componentDidMount() {
-    this.usersStorage = JSON.parse(localStorage.getItem("users")) || [];
+    this.users = getData("users");
   }
 
   logIn = (e) => {
     e.preventDefault();
 
-    const form = new FormData(this.form.current);
-    const usernameInput = form.get("username");
-    const passwordInput = form.get("password");
-
-    const userStorage = this.isUserCreated(usernameInput);
+    const { usernameInput, passwordInput } = getFormInputs(this.form.current);
+    const userStorage = getUser(usernameInput);
 
     const canLogin = this.validateForm({
       usernameInput,
@@ -32,29 +30,20 @@ class SignIn extends React.Component {
     });
 
     if (canLogin) {
-      const users = this.usersStorage.map((user) => {
+      const users = this.users;
+
+      for (let i = 0; i < users.length; i++) {
+        const user = users[i];
         if (user.username === userStorage.username) {
           user.isLoggedIn = true;
+          break;
         }
-        return user;
-      });
+      }
 
-      localStorage.setItem("users", JSON.stringify(users));
+      setData("users", users);
 
-      this.props.router.push(
-        {
-          pathname: "/comments",
-          query: { username: userStorage },
-        },
-        "/comments"
-      );
+      this.props.router.push("/comments");
     }
-  };
-
-  isUserCreated = (username) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-
-    return users.filter((user) => user.username === username)[0] || {};
   };
 
   validateForm = ({ usernameInput, passwordInput, userStorage }) => {
@@ -81,62 +70,13 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <section className={styles["sign-in"]}>
-        <h2 className={styles["sign-in__title"]}>Log in</h2>
-
-        <form ref={this.form} className={styles["sign-in__form"]}>
-          <label htmlFor="username" className={styles["sign-in__form_label"]}>
-            <span className={styles["sign-in__form_input-title"]}>
-              Username
-            </span>
-            <input
-              className={styles["sign-in__form_input"]}
-              id="username"
-              name="username"
-              type="text"
-              placeholder="juliusomo"
-              required
-            />
-          </label>
-
-          <label htmlFor="password" className={styles["sign-in__form_label"]}>
-            <span className={styles["sign-in__form_input-title"]}>
-              Password
-            </span>
-            <input
-              className={styles["sign-in__form_input"]}
-              id="password"
-              name="password"
-              type="password"
-              placeholder="1234"
-              minLength="5"
-              required
-            />
-            <Link href="/forgot-password">
-              <span className={styles["forgot-password__link"]}>
-                Forgot password?
-              </span>
-            </Link>
-          </label>
-
-          <span className={styles.error}>{this.state.loginError}</span>
-
-          <button
-            onClick={this.logIn}
-            className={styles["sign-in__form_submit"]}
-            type="submit"
-          >
-            Log in
-          </button>
-
-          <span className={styles["sign-up__link"]}>
-            Don't have an account?
-            <Link href="/sign-up">
-              <span>Create one</span>
-            </Link>
-          </span>
-        </form>
-      </section>
+      <Form
+        typeForm="signIn"
+        title="Log In"
+        formRef={this.form}
+        onSubmit={this.logIn}
+        error={this.state.loginError}
+      />
     );
   }
 }

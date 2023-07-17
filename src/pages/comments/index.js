@@ -1,55 +1,48 @@
 import React from "react";
+import App from "app";
 import Layout from "@components/Layout";
 import FormSkeleton from "@components/FormSkeleton";
-import App from "app";
-import { withRouter } from "next/router";
 import data from "@data/data.json";
+import { getData, setData, isAnUserLoggedIn } from "@utils/myLocalStorage";
+import { withRouter } from "next/router";
 
 class CommentsPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: this.props.router.query.user,
+      user: null,
       canAccess: false,
     };
   }
 
   componentDidMount() {
-    if (!localStorage.getItem("comments")) {
-      const comments = JSON.stringify(data.comments);
-      localStorage.setItem("comments", comments);
-    }
+    // Authenticating the page
+    const userLoggedIn = isAnUserLoggedIn();
 
-    this.usersStorage = JSON.parse(localStorage.getItem("users")) || [];
-
-    if (this.state.user || this.isAnUserLoggedIn()) {
-      this.setState({ canAccess: true });
+    if (userLoggedIn) {
+      this.setState({ user: userLoggedIn, canAccess: true });
     } else {
       this.props.router.push("/");
     }
+
+    // Saving the default comments in localstorage
+    if (getData("comments").length === 0) {
+      setData("comments", data.comments);
+    }
   }
 
-  isAnUserLoggedIn = () => {
-    const isAnUserLoggedIn = this.usersStorage.find(
-      (userStorage) => userStorage.isLoggedIn
-    );
-
-    if (!this.state.user && isAnUserLoggedIn) {
-      this.setState({ user: isAnUserLoggedIn });
-    }
-
-    return !!isAnUserLoggedIn;
-  };
-
   logOut = () => {
-    const users = this.usersStorage.map((user) => {
+    const users = getData("users");
+
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
       if (user.username === this.state.user.username) {
         user.isLoggedIn = false;
+        break;
       }
-      return user;
-    });
+    }
 
-    localStorage.setItem("users", JSON.stringify(users));
+    setData("users", users);
     this.props.router.push("/");
   };
 

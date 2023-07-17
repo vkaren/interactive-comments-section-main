@@ -1,6 +1,8 @@
 import React, { createRef } from "react";
+import { getData, setData, getUser } from "@utils/myLocalStorage";
+import { getFormInputs } from "@utils/getFormInputs";
+import Form from "@components/Form";
 import { withRouter } from "next/router";
-import styles from "./styles.module.css";
 
 class ForgotPassword extends React.Component {
   constructor(props) {
@@ -9,17 +11,17 @@ class ForgotPassword extends React.Component {
       recoveryPasswordError: "",
     };
     this.form = createRef();
-    this.userStorage = JSON.parse(localStorage.getItem("users")) || [];
+  }
+
+  componentDidMount() {
+    this.users = getData("users");
   }
 
   recoveryPassword = (e) => {
     e.preventDefault();
 
-    const form = new FormData(this.form.current);
-    const usernameInput = form.get("username");
-    const passwordInput = form.get("password");
-
-    const userStorage = this.isUserCreated(usernameInput);
+    const { usernameInput, passwordInput } = getFormInputs(this.form.current);
+    const userStorage = getUser(usernameInput);
 
     const canRecoverPassword = this.validateForm({
       usernameInput,
@@ -28,39 +30,30 @@ class ForgotPassword extends React.Component {
     });
 
     if (canRecoverPassword) {
-      this.setNewPassword({ userStorage, passwordInput });
+      this.setNewPassword({ username: userStorage.username, passwordInput });
 
-      this.props.router.push(
-        {
-          pathname: "/comments",
-          query: { username: userStorage },
-        },
-        "/comments"
-      );
+      this.props.router.push("/comments");
     }
   };
 
-  setNewPassword = ({ userStorage, passwordInput }) => {
-    const users = this.userStorage.map((user) => {
-      if (user.username === userStorage.username) {
+  setNewPassword = ({ username, passwordInput }) => {
+    const users = this.users;
+
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+
+      if (user.username === username) {
         user.password = passwordInput;
         user.isLoggedIn = true;
       }
-      return user;
-    });
+    }
 
-    localStorage.setItem("users", JSON.stringify(users));
-  };
-
-  isUserCreated = (username) => {
-    return (
-      this.userStorage.filter((user) => user.username === username)[0] || {}
-    );
+    setData("users", users);
   };
 
   validateForm = ({ usernameInput, passwordInput, userStorage }) => {
-    const regex = /^([a-z0-9_])+$/i;
-    const isARightPassword = regex.test(passwordInput);
+    const allowedCharacters = /^([a-z0-9_])+$/i;
+    const isARightPassword = allowedCharacters.test(passwordInput);
     const isPasswordRightLength = passwordInput.length >= 5;
 
     if (
@@ -96,58 +89,13 @@ class ForgotPassword extends React.Component {
 
   render() {
     return (
-      <section className={styles["forgot-password"]}>
-        <h2 className={styles["forgot-password__title"]}>Forgot password</h2>
-
-        <form ref={this.form} className={styles["forgot-password__form"]}>
-          <label
-            htmlFor="username"
-            className={styles["forgot-password__form_label"]}
-          >
-            <span className={styles["forgot-password__form_input-title"]}>
-              Username
-            </span>
-            <input
-              className={styles["forgot-password__form_input"]}
-              id="username"
-              name="username"
-              type="text"
-              placeholder="juliusomo"
-              required
-            />
-          </label>
-
-          <label
-            htmlFor="password"
-            className={styles["forgot-password__form_label"]}
-          >
-            <span className={styles["forgot-password__form_input-title"]}>
-              New password
-            </span>
-            <input
-              className={styles["forgot-password__form_input"]}
-              id="password"
-              name="password"
-              type="password"
-              placeholder="1234"
-              minLength="5"
-              required
-            />
-          </label>
-
-          <span className={styles.error}>
-            {this.state.recoveryPasswordError}
-          </span>
-
-          <button
-            onClick={this.recoveryPassword}
-            className={styles["forgot-password__form_submit"]}
-            type="submit"
-          >
-            Continue
-          </button>
-        </form>
-      </section>
+      <Form
+        typeForm={"forgotPassword"}
+        title={"Forgot Password"}
+        formRef={this.form}
+        onSubmit={this.recoveryPassword}
+        error={this.state.recoveryPasswordError}
+      />
     );
   }
 }

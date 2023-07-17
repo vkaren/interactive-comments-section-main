@@ -1,4 +1,5 @@
-.forgot-password {
+/* Form section*/
+.form_section {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -9,42 +10,51 @@
   background: var(--white);
 }
 
-/* Forgot passwod title*/
-.forgot-password__title {
-  padding-top: 4.5rem;
+/* Form section title*/
+.form_section-title {
+  padding-top: 4.3rem;
   font-size: 2.5rem;
 }
 
-/* Forgot passwod form*/
-.forgot-password__form {
+/* Form*/
+.form {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 4rem;
 }
 
-/* Forgot passwod form - Labels*/
-.forgot-password__form_label {
+/* Form - Labels*/
+.form_label {
   display: flex;
   flex-direction: column;
   margin-bottom: 2rem;
 }
-.forgot-password__form_input-title {
+.form_input-title {
   margin: 0.5rem 0;
   font-size: 1.5rem;
 }
-.forgot-password__form_input {
+.form_input {
   padding: 5px 10px;
   letter-spacing: 1px;
   border-radius: 3px;
   border: 1px solid var(--light-grayish-blue);
 }
-.forgot-password__form_input::placeholder {
+.form_input::placeholder {
   color: var(--grayish-blue);
 }
 
-/* Forgot passwod form - Submit button*/
-.forgot-password__form_submit {
+/* Form - Forgot password link*/
+.forgot-password__link {
+  margin-top: 0.8rem;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--moderate-blue);
+  cursor: pointer;
+}
+
+/* Form - Submit button*/
+.form_submit {
   padding: 0.7rem 1.5rem;
   font-weight: bold;
   letter-spacing: 1px;
@@ -54,14 +64,27 @@
   background: var(--moderate-blue);
   cursor: pointer;
 }
-.forgot-password__form_submit:hover {
+.form_submit:hover {
   opacity: 0.8;
 }
-.forgot-password__form_submit:active {
+.form_submit:active {
   opacity: 1;
 }
 
-/* Forgot passwod error */
+/* Form - Create account link*/
+.sign-up__link {
+  margin-top: 1.2rem;
+  font-size: 1.2rem;
+  color: var(--grayish-blue);
+}
+.sign-up__link span {
+  margin-left: 3px;
+  text-decoration: none;
+  color: var(--moderate-blue);
+  cursor: pointer;
+}
+
+/* Form error */
 .error {
   margin-bottom: 10px;
   padding: 0 8rem;

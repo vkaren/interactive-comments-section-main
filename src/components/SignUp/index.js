@@ -1,5 +1,7 @@
 import React, { createRef } from "react";
-import styles from "./styles.module.css";
+import Form from "@components/Form";
+import { getData, setData } from "@utils/myLocalStorage";
+import { getFormInputs } from "@utils/getFormInputs";
 import { withRouter } from "next/router";
 
 class SignUp extends React.Component {
@@ -11,72 +13,63 @@ class SignUp extends React.Component {
     this.form = createRef();
   }
 
+  componentDidMount() {
+    this.users = getData("users");
+  }
+
   onCreateAccount = (e) => {
     e.preventDefault();
 
-    const form = new FormData(this.form.current);
-    const username = form.get("username");
-    const password = form.get("password");
+    const { usernameInput, passwordInput } = getFormInputs(this.form.current);
 
-    const createdUsers = JSON.parse(localStorage.getItem("users")) || [];
     const canCreateAnAccount = this.validateForm({
-      username,
-      password,
-      createdUsers,
+      usernameInput,
+      passwordInput,
     });
 
     if (canCreateAnAccount) {
       const user = {
-        username,
-        password,
-        isLoggedIn: true,
+        username: usernameInput,
+        password: passwordInput,
         image: {
           png: "/avatars/avatar-default-user.png",
         },
+        isLoggedIn: true,
         votedComments: [],
       };
-      createdUsers.push(user);
 
-      const usersStorage = JSON.stringify(createdUsers);
-      localStorage.setItem("users", usersStorage);
+      this.users.push(user);
 
-      this.props.router.push(
-        {
-          pathname: "/comments",
-          query: { user },
-        },
-        "/comments"
-      );
+      setData("users", this.users);
+
+      this.props.router.push("/comments");
     }
   };
 
-  validateForm = ({ username, password, createdUsers }) => {
-    const regex = /^([a-z0-9_])+$/i;
-    const isUsernameAlreadyTaken = this.isUsernameAlreadyTaken({
-      createdUsers,
-      username,
-    });
-    const isPasswordRightLength = password.length >= 5;
+  validateForm = ({ usernameInput, passwordInput }) => {
+    const allowedCharacters = /^([a-z0-9_])+$/i;
+    const isUsernameAlreadyTaken = this.isUsernameAlreadyTaken(usernameInput);
+    const isPasswordRightLength = passwordInput.length >= 5;
 
     if (
-      regex.test(username) &&
-      regex.test(password) &&
+      allowedCharacters.test(usernameInput) &&
+      allowedCharacters.test(passwordInput) &&
       !isUsernameAlreadyTaken &&
       isPasswordRightLength
     ) {
       this.setState({ signUpError: "" });
       return true;
-    } else if (isUsernameAlreadyTaken) {
-      this.setState({
-        signUpError: "This username is already taken.",
-      });
-    } else if (username === "") {
+    } else if (!usernameInput) {
       this.setState({
         signUpError: "Username required.",
       });
-    } else if (password === "") {
+    } else if (!passwordInput) {
       this.setState({
         signUpError: "Password required.",
+      });
+    } else if (isUsernameAlreadyTaken) {
+      this.setState({
+        signUpError: "This username is already taken.",
       });
     } else if (!isPasswordRightLength) {
       this.setState({
@@ -91,50 +84,19 @@ class SignUp extends React.Component {
     return false;
   };
 
-  isUsernameAlreadyTaken = ({ createdUsers, username }) => {
-    return createdUsers.filter((user) => user.username === username).length > 0;
+  isUsernameAlreadyTaken = (username) => {
+    return this.users.filter((user) => user.username === username).length > 0;
   };
 
   render() {
     return (
-      <section className={styles["sign-up"]}>
-        <h2 className={styles["sign-up__title"]}>Sign up</h2>
-
-        <form ref={this.form} className={styles["sign-up__form"]}>
-          <label htmlFor="username">
-            <span>Username</span>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="juliusomo"
-              required
-            />
-          </label>
-
-          <label htmlFor="password">
-            <span>Password</span>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="1234"
-              minLength="5"
-              required
-            />
-          </label>
-
-          <span className={styles.error}>{this.state.signUpError}</span>
-
-          <button
-            className={styles["sign-up__form_submit"]}
-            onClick={this.onCreateAccount}
-            type="submit"
-          >
-            Continue
-          </button>
-        </form>
-      </section>
+      <Form
+        typeForm={"signUp"}
+        title={"Sign up"}
+        formRef={this.form}
+        onSubmit={this.onCreateAccount}
+        error={this.state.signUpError}
+      />
     );
   }
 }
