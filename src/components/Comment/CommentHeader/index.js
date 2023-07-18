@@ -9,7 +9,7 @@ const CommentHeader = ({ user, createdAt }) => {
   return (
     <header className={styles["comment_header"]}>
       <div className={styles["comment_profile-photo"]}>
-        <Image src={user.image.png} width={25} height={25} />
+        <Image src={user.image.png} alt="User avatar" width={25} height={25} />
       </div>
 
       <span className={styles["comment_username"]}>{user.username}</span>

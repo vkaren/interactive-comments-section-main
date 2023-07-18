@@ -10,12 +10,12 @@ const Header = ({ isOnCommentsPage, logOut, canAccess }) => (
     ${!canAccess && styles["access_denied"]}`}
   >
     <div className={styles["header_logo"]}>
-      <Image src={headerIcon} width={50} height={50} />
+      <Image src={headerIcon} alt="Logo" width={50} height={50} />
     </div>
 
     {isOnCommentsPage && canAccess && (
       <button className={styles["comments_page__logout-btn"]} onClick={logOut}>
-        <Image src={logoutIcon} width={18} height={18} />
+        <Image src={logoutIcon} alt="Log out icon" width={18} height={18} />
         <span className={styles["logout-btn_text"]}>Log out</span>
       </button>
     )}

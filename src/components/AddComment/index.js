@@ -29,7 +29,12 @@ const AddComment = ({ replyComment = null }) => {
       }`}
     >
       <div className={styles["add-comment_profile-photo"]}>
-        <Image src={currentUser.image.png} width={25} height={25} />
+        <Image
+          src={currentUser.image.png}
+          alt="User avatar"
+          width={25}
+          height={25}
+        />
       </div>
 
       <textarea
