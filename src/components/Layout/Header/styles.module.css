@@ -14,6 +14,10 @@
   justify-content: space-between;
   align-items: center;
 }
+.header.comments_page.access_denied {
+  justify-content: center;
+}
+
 .comments_page .header_logo {
   margin-left: 3rem;
 }
@@ -22,10 +26,8 @@
   align-items: flex-start;
   margin-right: 5rem;
   font-weight: bold;
-  border: none;
   color: var(--moderate-blue);
   background: transparent;
-  cursor: pointer;
 }
 .logout-btn_text {
   margin-left: 0.5rem;

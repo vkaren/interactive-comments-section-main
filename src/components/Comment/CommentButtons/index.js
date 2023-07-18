@@ -1,18 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReplyIcon from "@icons/icon-reply.svg";
 import DeleteIcon from "@icons/icon-delete.svg";
 import EditIcon from "@icons/icon-edit.svg";
+import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-const CommentButtons = ({
-  id,
-  currentUser,
-  user,
-  onClickReplyBtn,
-  onClickEditBtn,
-  onClickDelete,
-}) =>
-  currentUser.username === user.username ? (
+const CommentButtons = ({ id, user, onClickReplyBtn, onClickEditBtn }) => {
+  const { currentUser, onClickDelete } = useContext(AppContext);
+
+  return currentUser.username === user.username ? (
     <>
       <button
         className={styles["comment_delete-btn"]}
@@ -32,5 +28,6 @@ const CommentButtons = ({
       <span>Reply</span>
     </button>
   );
+};
 
 export default CommentButtons;

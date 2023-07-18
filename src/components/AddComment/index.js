@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import Image from "next/image";
+import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-const AddComment = ({
-  currentUser,
-  onWritingComment,
-  onAddComment,
-  onAddReply,
-  replyComment = null,
-}) => {
-  const preventDefaultBehaviourEnter = (e) => {
-    if (e.key === "Enter") e.preventDefault();
+const AddComment = ({ replyComment = null }) => {
+  const {
+    currentUser,
+    textarea,
+    onAddReply,
+    onAddComment,
+    onWritingComment,
+    preventDefaultBehaviourEnter,
+  } = useContext(AppContext);
+
+  const newReplyData = {
+    type: "reply",
+    replyComment,
   };
 
   const onAddCommentOrReply = () => {
-    replyComment ? onAddReply(replyComment) : onAddComment();
+    replyComment ? onAddReply(newReplyData) : onAddComment();
   };
 
   return (
@@ -28,10 +33,11 @@ const AddComment = ({
       </div>
 
       <textarea
+        ref={textarea}
         className={styles["add-comment_textarea"]}
         placeholder="Add a comment..."
         onKeyDown={preventDefaultBehaviourEnter}
-        onKeyUp={onWritingComment({ replyComment })}
+        onKeyUp={onWritingComment(replyComment ? newReplyData : null)}
       ></textarea>
 
       <button

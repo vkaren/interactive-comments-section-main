@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-const DeleteComment = ({ onDeleteComment, onCancelDeleteComment }) => {
+const DeleteComment = () => {
+  const { onDeleteComment, onCancelDeleteComment } = useContext(AppContext);
   return (
     <>
       <section className={styles["delete-comment_section"]}>

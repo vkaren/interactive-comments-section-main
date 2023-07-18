@@ -1,16 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import CommentContainer from "@components/CommentContainer";
+import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-const CommentThread = ({
-  currentUser,
-  comments,
-  onAddReply,
-  onWritingComment,
-  onEditComment,
-  onVoteComment,
-  onClickDelete,
-}) => {
+const CommentThread = () => {
+  const { comments } = useContext(AppContext);
+
   return (
     <section className={styles["comments_section"]}>
       {comments.map((comment) => (
@@ -18,16 +13,10 @@ const CommentThread = ({
           key={comment.id}
           id={comment.id}
           user={comment.user}
-          currentUser={currentUser}
           content={comment.content}
           createdAt={comment.createdAt}
           score={comment.score}
           replies={comment.replies}
-          onAddReply={onAddReply}
-          onWritingComment={onWritingComment}
-          onEditComment={onEditComment}
-          onVoteComment={onVoteComment}
-          onClickDelete={onClickDelete}
         />
       ))}
     </section>

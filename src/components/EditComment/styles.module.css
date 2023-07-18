@@ -1,34 +1,20 @@
 /* Edit comment - textarea */
 .comment_edit-textarea {
   width: 98%;
-  height: 7rem;
-  padding: 1rem;
   margin: 1.5rem 1rem;
-  font-family: "Rubik", sans-serif;
-  font-size: 1.5rem;
-  border-radius: 5px;
-  border: none;
-  outline: 2px solid var(--light-gray);
-  resize: none;
   grid-column: 2/5;
-}
-.comment_edit-textarea:focus {
-  outline: 2px solid var(--moderate-blue);
 }
 
 /* Edit comment - update button */
 .comment_update-btn {
   padding: 1rem 2rem;
-  grid-column: 4/5;
-  grid-row: 3/4;
   justify-self: right;
-  border: none;
-  border-radius: 5px;
   font-size: 1.2rem;
   font-weight: bold;
   color: var(--white);
   background: var(--moderate-blue);
-  cursor: pointer;
+  grid-column: 4/5;
+  grid-row: 3/4;
 }
 
 @media (max-width: 650px) {

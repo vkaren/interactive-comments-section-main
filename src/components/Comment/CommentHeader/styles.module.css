@@ -8,6 +8,8 @@
   font-size: 1.3rem;
   color: var(--dark-blue);
 }
+
+/* Comment header username */
 .comment_username {
   max-width: 70px;
   margin: 0 1rem;
@@ -29,6 +31,8 @@
 .comment_username:hover::-webkit-scrollbar-thumb {
   background: var(--light-grayish-blue);
 }
+
+/* Comment header current user (you span)*/
 .comment_current-user {
   padding: 0.2rem 0.4rem;
   margin-right: 1.2rem;
@@ -38,6 +42,8 @@
   color: var(--white);
   background: var(--moderate-blue);
 }
+
+/* Comment header time created */
 .comment_time {
   width: 100%;
   max-width: 90px;

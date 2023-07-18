@@ -4,6 +4,7 @@ import Layout from "@components/Layout";
 import FormSkeleton from "@components/FormSkeleton";
 import data from "@data/data.json";
 import { getData, setData, isAnUserLoggedIn } from "@utils/myLocalStorage";
+import { AppProvider } from "context";
 import { withRouter } from "next/router";
 
 class CommentsPage extends React.Component {
@@ -48,9 +49,11 @@ class CommentsPage extends React.Component {
 
   render() {
     return (
-      <Layout logOut={this.logOut}>
+      <Layout logOut={this.logOut} canAccess={this.state.canAccess}>
         {this.state.canAccess ? (
-          <App user={this.state.user} />
+          <AppProvider user={this.state.user}>
+            <App />
+          </AppProvider>
         ) : (
           <FormSkeleton />
         )}

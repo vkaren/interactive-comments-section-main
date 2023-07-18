@@ -11,9 +11,7 @@
   font-size: 1.3rem;
   font-weight: bold;
   color: var(--moderate-blue);
-  border: none;
   background: transparent;
-  cursor: pointer;
   grid-row: 1/2;
   grid-column: 3/4;
 }

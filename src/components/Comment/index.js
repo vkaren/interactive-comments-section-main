@@ -18,14 +18,14 @@ class Comment extends React.Component {
       timerDelayDateFormat: {},
     };
 
-    // Info needed if someone replies to this comment or reply
+    // Info needed if someone replies to this comment
     this.replyComment = {
       replyingTo: this.props.user.username,
       replyingToCommentId: this.props.replyingToCommentId || this.props.id,
-      hideAddCommentBox: this.hideAddCommentBox,
+      hideReplyState: this.hideReplyState,
     };
 
-    // Info needed to edit this comment or reply
+    // Info needed to edit this comment
     this.commentToEdit = {
       id: this.props.id,
       hideEditState: this.hideEditState,
@@ -61,20 +61,14 @@ class Comment extends React.Component {
     this.setState({ dateFormat, timerDelayDateFormat });
   };
 
-  hideAddCommentBox = () => {
-    this.setState({ isReplying: false });
-  };
-
   onClickReplyBtn = () => {
     const isReplying = !this.state.isReplying;
 
     this.setState({ isReplying });
   };
 
-  hideEditState = () => {
-    const isEditing = false;
-
-    this.setState({ isEditing });
+  hideReplyState = () => {
+    this.setState({ isReplying: false });
   };
 
   onClickEditBtn = () => {
@@ -83,55 +77,39 @@ class Comment extends React.Component {
     this.setState({ isEditing });
   };
 
+  hideEditState = () => {
+    this.setState({ isEditing: false });
+  };
+
   render() {
+    const { id, user, content, createdAt, score, replyingTo } = this.props;
+
     return (
       <>
-        <div id={this.props.id} className={styles["comment"]}>
+        <div id={id} className={styles["comment"]}>
           <CommentHeader
-            currentUser={this.props.currentUser}
-            user={this.props.user}
-            dateFormat={this.state.dateFormat}
-            createdAt={this.props.createdAt}
+            user={user}
+            createdAt={this.state.dateFormat || createdAt}
           />
 
           <CommentButtons
-            id={this.props.id}
-            currentUser={this.props.currentUser}
-            user={this.props.user}
+            id={id}
+            user={user}
             onClickReplyBtn={this.onClickReplyBtn}
             onClickEditBtn={this.onClickEditBtn}
-            onClickDelete={this.props.onClickDelete}
           />
 
-          <CommentLike
-            id={this.props.id}
-            currentUser={this.props.currentUser}
-            score={this.props.score}
-            onVoteComment={this.props.onVoteComment}
-          />
+          <CommentLike id={id} score={score} />
 
           {this.state.isEditing ? (
-            <EditComment
-              content={this.props.content}
-              commentToEdit={this.commentToEdit}
-              onEditComment={this.props.onEditComment}
-              onWritingComment={this.props.onWritingComment}
-            />
+            <EditComment content={content} commentToEdit={this.commentToEdit} />
           ) : (
-            <CommentText
-              replyingTo={this.props.replyingTo}
-              content={this.props.content}
-            />
+            <CommentText replyingTo={replyingTo} content={content} />
           )}
         </div>
 
         {this.state.isReplying && (
-          <AddComment
-            currentUser={this.props.currentUser}
-            replyComment={this.replyComment}
-            onWritingComment={this.props.onWritingComment}
-            onAddReply={this.props.onAddReply}
-          />
+          <AddComment replyComment={this.replyComment} />
         )}
       </>
     );

@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-const EditComment = ({
-  content,
-  commentToEdit,
-  onWritingComment,
-  onEditComment,
-}) => {
-  const preventDefaultBehaviourEnter = (e) => {
-    if (e.key === "Enter") e.preventDefault();
+const EditComment = ({ content, commentToEdit }) => {
+  const { preventDefaultBehaviourEnter, onWritingComment, onEditComment } =
+    useContext(AppContext);
+
+  const newCommentData = {
+    type: "edit",
+    commentToEdit,
   };
 
   return (
@@ -17,12 +17,12 @@ const EditComment = ({
         className={styles["comment_edit-textarea"]}
         defaultValue={content}
         onKeyDown={preventDefaultBehaviourEnter}
-        onKeyUp={onWritingComment({ commentToEdit })}
+        onKeyUp={onWritingComment(newCommentData)}
       ></textarea>
 
       <button
         className={styles["comment_update-btn"]}
-        onClick={() => onEditComment(commentToEdit)}
+        onClick={() => onEditComment(newCommentData)}
       >
         UPDATE
       </button>

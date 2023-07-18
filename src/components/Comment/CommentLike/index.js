@@ -1,6 +1,7 @@
 import React from "react";
 import PlusIcon from "@icons/icon-plus.svg";
 import MinusIcon from "@icons/icon-minus.svg";
+import { AppContext } from "context";
 import styles from "./styles.module.css";
 
 class CommentLike extends React.Component {
@@ -8,12 +9,6 @@ class CommentLike extends React.Component {
     super(props);
     this.state = {
       vote: null,
-    };
-
-    // Info needed to vote on this comment or reply
-    this.comment = {
-      id: this.props.id,
-      score: this.props.score,
     };
   }
 
@@ -25,15 +20,22 @@ class CommentLike extends React.Component {
   }
 
   getCurrentUserVote = () => {
-    return this.props.currentUser.votedComments.find(
+    const { currentUser } = this.context;
+
+    return currentUser.votedComments.find(
       (comment) => comment.commentId === this.props.id
     )?.vote;
   };
 
   onClickVote = (e) => {
+    const { onVoteComment } = this.context;
     const vote = e.currentTarget.id;
+    const comment = {
+      id: this.props.id,
+      score: this.props.score,
+    };
 
-    this.props.onVoteComment({ comment: this.comment, vote });
+    onVoteComment({ comment, vote });
     this.setState({ vote });
   };
 
@@ -65,5 +67,7 @@ class CommentLike extends React.Component {
     );
   }
 }
+
+CommentLike.contextType = AppContext;
 
 export default CommentLike;
