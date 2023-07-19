@@ -48,6 +48,7 @@ const AddComment = ({ replyComment = null }) => {
       <button
         className={styles["add-comment_send-btn"]}
         onClick={onAddCommentOrReply}
+        aria-label={`Send ${replyComment ? "reply" : "comment"}`}
       >
         {replyComment ? "REPLY" : "SEND"}
       </button>

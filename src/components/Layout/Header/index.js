@@ -14,7 +14,11 @@ const Header = ({ isOnCommentsPage, logOut, canAccess }) => (
     </div>
 
     {isOnCommentsPage && canAccess && (
-      <button className={styles["comments_page__logout-btn"]} onClick={logOut}>
+      <button
+        className={styles["comments_page__logout-btn"]}
+        onClick={logOut}
+        aria-label="Log out"
+      >
         <Image src={logoutIcon} alt="Log out icon" width={18} height={18} />
         <span className={styles["logout-btn_text"]}>Log out</span>
       </button>

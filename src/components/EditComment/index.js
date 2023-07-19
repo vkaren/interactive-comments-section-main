@@ -23,6 +23,7 @@ const EditComment = ({ content, commentToEdit }) => {
       <button
         className={styles["comment_update-btn"]}
         onClick={() => onEditComment(newCommentData)}
+        aria-label="Update comment"
       >
         UPDATE
       </button>

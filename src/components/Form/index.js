@@ -45,6 +45,7 @@ const Form = ({ typeForm, title, formRef, onSubmit, error }) => (
         onClick={onSubmit}
         className={styles["form_submit"]}
         type="submit"
+        aria-label={title}
       >
         {typeForm === "signIn" ? "Log in" : "Continue"}
       </button>

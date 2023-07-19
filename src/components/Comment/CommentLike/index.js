@@ -29,12 +29,11 @@ class CommentLike extends React.Component {
 
   onClickVote = (e) => {
     const { onVoteComment } = this.context;
-    const vote = e.currentTarget.id;
+    const vote = e.currentTarget.getAttribute("data-vote-type");
     const comment = {
       id: this.props.id,
       score: this.props.score,
     };
-
     onVoteComment({ comment, vote });
     this.setState({ vote });
   };
@@ -43,11 +42,12 @@ class CommentLike extends React.Component {
     return (
       <div className={styles["comment_like"]}>
         <button
-          id="upvote"
           className={`${styles["comment_like-btn"]} ${
             this.state.vote === "upvote" && styles["active"]
           }`}
           onClick={this.onClickVote}
+          data-vote-type="upvote"
+          aria-label="Upvote comment"
         >
           <PlusIcon />
         </button>
@@ -55,11 +55,12 @@ class CommentLike extends React.Component {
         <span className={styles["comment_likes"]}>{this.props.score}</span>
 
         <button
-          id="downvote"
           className={`${styles["comment_like-btn"]} ${
             this.state.vote === "downvote" && styles["active"]
           }`}
           onClick={this.onClickVote}
+          data-vote-type="downvote"
+          aria-label="Downvote comment"
         >
           <MinusIcon />
         </button>

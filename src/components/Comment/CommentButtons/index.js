@@ -13,17 +13,26 @@ const CommentButtons = ({ id, user, onClickReplyBtn, onClickEditBtn }) => {
       <button
         className={styles["comment_delete-btn"]}
         onClick={() => onClickDelete(id)}
+        aria-label="Delete comment"
       >
         <DeleteIcon />
         <span>Delete</span>
       </button>
-      <button className={styles["comment_edit-btn"]} onClick={onClickEditBtn}>
+      <button
+        className={styles["comment_edit-btn"]}
+        onClick={onClickEditBtn}
+        aria-label="Edit comment"
+      >
         <EditIcon />
         <span>Edit</span>
       </button>
     </>
   ) : (
-    <button className={styles["comment_reply-btn"]} onClick={onClickReplyBtn}>
+    <button
+      className={styles["comment_reply-btn"]}
+      onClick={onClickReplyBtn}
+      aria-label="Reply comment"
+    >
       <ReplyIcon />
       <span>Reply</span>
     </button>

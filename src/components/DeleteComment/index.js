@@ -17,12 +17,14 @@ const DeleteComment = () => {
           <button
             className={styles["delete-comment_cancel-btn"]}
             onClick={onCancelDeleteComment}
+            aria-label="Cancel delete"
           >
             NO, CANCEL
           </button>
           <button
             className={styles["delete-comment_accept-btn"]}
             onClick={onDeleteComment}
+            aria-label="Delete"
           >
             YES, DELETE
           </button>
