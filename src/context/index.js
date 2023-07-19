@@ -56,7 +56,7 @@ function AppProvider({ children, user }) {
       setIsEnterPressed(isEnterPressed);
     };
 
-    return debounce(updateCommentContent, 500);
+    return debounce(updateCommentContent, 10);
   };
 
   const onAddComment = () => {
