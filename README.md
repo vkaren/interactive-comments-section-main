@@ -70,6 +70,8 @@ _src/components/Comment_
 
 <img src="./readme_img/comment-date-format.png" width="600px">
 
+<img src="./readme_img/updateDateFormat.png" width="600px">
+
 _src/utils/getDateFormat.js_
 
 <img src="./readme_img/getDateFormat.png" width="600px">
@@ -80,7 +82,7 @@ _src/context_
 
 <img src="./readme_img/voteComment.png" width="600px">
 
-When the user clicks to the delete button, the onClickDelete function will be called, it has the comment id that will be deleted as a parameter, updates the state of commentToDelete with this id, and the state of isDeleting to true so that the deleteComment modal is displayed. If the user accepts delete the comment, the function will loop through the list until it finds the comment and deletes it.
+When the user clicks to the delete button, the onClickDelete function will be called, it has the comment id that will be deleted as a parameter, updates the state of commentToDelete with this id, and the state of isDeleting to true so that the deleteComment modal is displayed. If the user accepts to delete the comment, the function will loop through the comments list until it finds the comment and deletes it.
 
 _src/context_
 
