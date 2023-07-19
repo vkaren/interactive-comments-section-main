@@ -16,7 +16,6 @@
 .prettierignore
 
 # Init challenge files
-README.md
 README-template.md
 style-guide.md
 
