@@ -1,0 +1,41 @@
+.comment_thread-skeleton {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 75%;
+  height: 45vh;
+  min-width: 320px;
+  max-width: 650px;
+}
+
+.comments-skeleton {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 10rem;
+  padding: 2rem;
+  border-radius: 5px;
+  background: var(--white);
+}
+
+.comments_header-skeleton {
+  display: flex;
+  align-items: center;
+}
+.comments_header_profile-photo {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  border-radius: 50%;
+}
+.comments_header_username {
+  width: 5rem;
+  height: 1.2rem;
+  border-radius: 5px;
+}
+.comments_text-skeleton {
+  width: 100%;
+  height: 1.2rem;
+  margin-top: 1.2rem;
+  border-radius: 5px;
+}

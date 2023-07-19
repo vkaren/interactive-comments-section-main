@@ -1,8 +1,7 @@
 import React from "react";
 import App from "app";
 import Layout from "@components/Layout";
-import FormSkeleton from "@components/FormSkeleton";
-import data from "@data/data.json";
+import FormSkeleton from "@components/Skeletons/FormSkeleton";
 import { getData, setData, isAnUserLoggedIn } from "@utils/myLocalStorage";
 import { AppProvider } from "context";
 import { withRouter } from "next/router";
@@ -16,19 +15,21 @@ class CommentsPage extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // Authenticating the page
     const userLoggedIn = isAnUserLoggedIn();
 
     if (userLoggedIn) {
+      // Saving the default comments in localstorage
+      if (getData("comments").length === 0) {
+        const data = await import("@data/data.json");
+        const comments = data.comments;
+        setData("comments", comments);
+      }
+
       this.setState({ user: userLoggedIn, canAccess: true });
     } else {
       this.props.router.push("/");
-    }
-
-    // Saving the default comments in localstorage
-    if (getData("comments").length === 0) {
-      setData("comments", data.comments);
     }
   }
 

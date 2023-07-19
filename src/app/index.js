@@ -1,8 +1,18 @@
 import React, { useContext } from "react";
-import AddComment from "@components/AddComment";
-import CommentThread from "@components/CommentThread";
-import DeleteComment from "@components/DeleteComment";
+import dynamic from "next/dynamic";
+import CommentThreadSkeleton from "@components/Skeletons/CommentThreadSkeleton";
+import AddCommentSkeleton from "@components/Skeletons/AddCommentSkeleton";
 import { AppContext } from "context";
+
+const CommentThread = dynamic(() => import("@components/CommentThread"), {
+  loading: () => <CommentThreadSkeleton />,
+});
+
+const AddComment = dynamic(() => import("@components/AddComment"), {
+  loading: () => <AddCommentSkeleton />,
+});
+
+const DeleteComment = dynamic(() => import("@components/DeleteComment"));
 
 const App = () => {
   const { isDeleting } = useContext(AppContext);
