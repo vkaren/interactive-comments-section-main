@@ -129,7 +129,6 @@ function AppProvider({ children, user }) {
     });
 
     saveVotedComment({ commentId: comment.id, vote });
-    saveScoreComment({ commentId: comment.id, newScore });
   };
 
   const saveVotedComment = ({ commentId, vote }) => {
@@ -155,18 +154,6 @@ function AppProvider({ children, user }) {
     }
 
     setData("users", users);
-  };
-
-  const saveScoreComment = ({ commentId, newScore }) => {
-    const commentsCopy = deepCopyList(comments);
-
-    const commentToUpdate = commentsCopy.find(
-      (comment) => comment.id === commentId
-    );
-
-    commentToUpdate.score = newScore;
-
-    updateComments({ comments: commentsCopy });
   };
 
   // Delete comments
