@@ -48,6 +48,9 @@
   width: 100%;
   max-width: 90px;
 }
+.comment_current-user ~ .comment_time {
+  width: 25%;
+}
 
 @media (max-width: 650px) {
   .comment_header {
