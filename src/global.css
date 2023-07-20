@@ -29,6 +29,7 @@ html {
   font-family: "Rubik", sans-serif;
 }
 body {
+  min-width: fit-content;
   min-height: 100vh;
   background: var(--very-light-gray);
 }
