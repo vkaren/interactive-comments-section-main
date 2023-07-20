@@ -30,12 +30,15 @@ class CommentLike extends React.Component {
   onClickVote = (e) => {
     const { onVoteComment } = this.context;
     const vote = e.currentTarget.getAttribute("data-vote-type");
-    const comment = {
-      id: this.props.id,
-      score: this.props.score,
-    };
-    onVoteComment({ comment, vote });
-    this.setState({ vote });
+
+    if (vote !== this.state.vote) {
+      const comment = {
+        id: this.props.id,
+        score: this.props.score,
+      };
+      onVoteComment({ comment, vote });
+      this.setState({ vote });
+    }
   };
 
   render() {
