@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
+import { AppContext } from "context";
 import ReplyIcon from "@icons/icon-reply.svg";
 import DeleteIcon from "@icons/icon-delete.svg";
 import EditIcon from "@icons/icon-edit.svg";
-import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-const CommentButtons = ({ id, user, onClickReplyBtn, onClickEditBtn }) => {
+const CommentButtons = ({ id, user, toggleReplyState, toggleEditState }) => {
   const { currentUser, onClickDelete } = useContext(AppContext);
 
   return currentUser.username === user.username ? (
@@ -20,7 +20,7 @@ const CommentButtons = ({ id, user, onClickReplyBtn, onClickEditBtn }) => {
       </button>
       <button
         className={styles["comment_edit-btn"]}
-        onClick={onClickEditBtn}
+        onClick={toggleEditState}
         aria-label="Edit comment"
       >
         <EditIcon />
@@ -30,7 +30,7 @@ const CommentButtons = ({ id, user, onClickReplyBtn, onClickEditBtn }) => {
   ) : (
     <button
       className={styles["comment_reply-btn"]}
-      onClick={onClickReplyBtn}
+      onClick={toggleReplyState}
       aria-label="Reply comment"
     >
       <ReplyIcon />

@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import dynamic from "next/dynamic";
+import { AppContext } from "context";
 import CommentThreadSkeleton from "@components/Skeletons/CommentThreadSkeleton";
 import AddCommentSkeleton from "@components/Skeletons/AddCommentSkeleton";
-import { AppContext } from "context";
 
 const CommentThread = dynamic(() => import("@components/CommentThread"), {
   loading: () => <CommentThreadSkeleton />,

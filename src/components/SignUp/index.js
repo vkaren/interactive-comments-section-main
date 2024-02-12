@@ -1,10 +1,10 @@
-import React, { createRef } from "react";
-import Form from "@components/Form";
+import { Component, createRef } from "react";
+import { withRouter } from "next/router";
 import { getData, setData } from "@utils/myLocalStorage";
 import { getFormInputs } from "@utils/getFormInputs";
-import { withRouter } from "next/router";
+import Form from "@components/Form";
 
-class SignUp extends React.Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +85,7 @@ class SignUp extends React.Component {
   };
 
   isUsernameAlreadyTaken = (username) => {
-    return this.users.filter((user) => user.username === username).length > 0;
+    return this.users.some((user) => user.username === username);
   };
 
   render() {

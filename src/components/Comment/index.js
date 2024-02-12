@@ -1,14 +1,14 @@
-import React from "react";
+import { Component } from "react";
+import { getDateFormat } from "@utils/getDateFormat";
 import CommentHeader from "@components/Comment/CommentHeader";
 import CommentButtons from "@components/Comment/CommentButtons";
 import CommentLike from "@components/Comment/CommentLike";
 import CommentText from "@components/Comment/CommentText";
 import AddComment from "@components/AddComment";
 import EditComment from "@components/EditComment";
-import { getDateFormat } from "@utils/getDateFormat";
 import styles from "./styles.module.css";
 
-class Comment extends React.Component {
+class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,13 +22,13 @@ class Comment extends React.Component {
     this.replyComment = {
       replyingTo: this.props.user.username,
       replyingToCommentId: this.props.replyingToCommentId || this.props.id,
-      hideReplyState: this.hideReplyState,
+      hideReplyState: this.toggleReplyState,
     };
 
     // Info needed to edit this comment
     this.commentToEdit = {
       id: this.props.id,
-      hideEditState: this.hideEditState,
+      hideEditState: this.toggleEditState,
     };
   }
 
@@ -61,24 +61,12 @@ class Comment extends React.Component {
     this.setState({ dateFormat, timerDelayDateFormat });
   };
 
-  onClickReplyBtn = () => {
-    const isReplying = !this.state.isReplying;
-
-    this.setState({ isReplying });
+  toggleReplyState = () => {
+    this.setState({ isReplying: !this.state.isReplying });
   };
 
-  hideReplyState = () => {
-    this.setState({ isReplying: false });
-  };
-
-  onClickEditBtn = () => {
-    const isEditing = !this.state.isEditing;
-
-    this.setState({ isEditing });
-  };
-
-  hideEditState = () => {
-    this.setState({ isEditing: false });
+  toggleEditState = () => {
+    this.setState({ isEditing: !this.state.isEditing });
   };
 
   render() {
@@ -95,8 +83,8 @@ class Comment extends React.Component {
           <CommentButtons
             id={id}
             user={user}
-            onClickReplyBtn={this.onClickReplyBtn}
-            onClickEditBtn={this.onClickEditBtn}
+            toggleReplyState={this.toggleReplyState}
+            toggleEditState={this.toggleEditState}
           />
 
           <CommentLike id={id} score={score} />

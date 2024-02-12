@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import headerIcon from "@icons/favicon-32x32.png";
 import logoutIcon from "@icons/icon-logout.png";
@@ -6,7 +5,7 @@ import styles from "./styles.module.css";
 
 const Header = ({ isOnCommentsPage, logOut, canAccess }) => (
   <header
-    className={`${styles.header}  ${isOnCommentsPage && styles.comments_page}
+    className={`${styles.header}  ${isOnCommentsPage && styles["comments_page"]}
     ${!canAccess && styles["access_denied"]}`}
   >
     <div className={styles["header_logo"]}>

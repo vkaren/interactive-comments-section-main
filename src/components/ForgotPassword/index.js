@@ -1,10 +1,10 @@
-import React, { createRef } from "react";
+import { Component, createRef } from "react";
+import { withRouter } from "next/router";
 import { getData, setData, getUser } from "@utils/myLocalStorage";
 import { getFormInputs } from "@utils/getFormInputs";
 import Form from "@components/Form";
-import { withRouter } from "next/router";
 
-class ForgotPassword extends React.Component {
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,20 +30,23 @@ class ForgotPassword extends React.Component {
     });
 
     if (canRecoverPassword) {
-      this.setNewPassword({ username: userStorage.username, passwordInput });
+      this.setNewPassword({
+        username: userStorage.username,
+        newPassword: passwordInput,
+      });
 
       this.props.router.push("/comments");
     }
   };
 
-  setNewPassword = ({ username, passwordInput }) => {
+  setNewPassword = ({ username, newPassword }) => {
     const users = this.users;
 
     for (let i = 0; i < users.length; i++) {
       const user = users[i];
 
       if (user.username === username) {
-        user.password = passwordInput;
+        user.password = newPassword;
         user.isLoggedIn = true;
       }
     }

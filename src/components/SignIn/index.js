@@ -1,10 +1,10 @@
-import React, { createRef } from "react";
-import Form from "@components/Form";
+import { Component, createRef } from "react";
+import { withRouter } from "next/router";
 import { getData, setData, getUser } from "@utils/myLocalStorage";
 import { getFormInputs } from "@utils/getFormInputs";
-import { withRouter } from "next/router";
+import Form from "@components/Form";
 
-class SignIn extends React.Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {

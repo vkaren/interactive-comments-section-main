@@ -1,4 +1,3 @@
-import React from "react";
 import Comment from "@components/Comment";
 import styles from "./styles.module.css";
 

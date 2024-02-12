@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import Image from "next/image";
 import { AppContext } from "context";
 import styles from "./styles.module.css";

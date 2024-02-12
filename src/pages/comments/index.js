@@ -1,12 +1,12 @@
-import React from "react";
+import { Component } from "react";
+import { withRouter } from "next/router";
+import { AppProvider } from "context";
+import { getData, setData, isAnUserLoggedIn } from "@utils/myLocalStorage";
 import App from "app";
 import Layout from "@components/Layout";
 import FormSkeleton from "@components/Skeletons/FormSkeleton";
-import { getData, setData, isAnUserLoggedIn } from "@utils/myLocalStorage";
-import { AppProvider } from "context";
-import { withRouter } from "next/router";
 
-class CommentsPage extends React.Component {
+class CommentsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
