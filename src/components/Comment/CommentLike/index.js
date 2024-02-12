@@ -1,10 +1,11 @@
-import React from "react";
+import { Component } from "react";
+import { AppContext } from "context";
+import { getData, setData } from "@utils/myLocalStorage";
 import PlusIcon from "@icons/icon-plus.svg";
 import MinusIcon from "@icons/icon-minus.svg";
-import { AppContext } from "context";
 import styles from "./styles.module.css";
 
-class CommentLike extends React.Component {
+class CommentLike extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,17 +29,58 @@ class CommentLike extends React.Component {
   };
 
   onClickVote = (e) => {
-    const { onVoteComment } = this.context;
     const vote = e.currentTarget.getAttribute("data-vote-type");
 
     if (vote !== this.state.vote) {
-      const comment = {
-        id: this.props.id,
-        score: this.props.score,
-      };
-      onVoteComment({ comment, vote });
+      this.onVoteComment(vote);
       this.setState({ vote });
     }
+  };
+
+  onVoteComment = (vote) => {
+    const { searchAndUpdateComment } = this.context;
+    let newScore = this.props.score;
+
+    if (vote === "upvote") {
+      newScore++;
+    } else {
+      newScore--;
+    }
+
+    searchAndUpdateComment({
+      commentId: this.props.id,
+      propertyToUpdate: "score",
+      newValue: newScore,
+    });
+
+    this.saveVotedCommentStorage(vote);
+  };
+
+  saveVotedCommentStorage = (vote) => {
+    const { currentUser } = this.context;
+    const users = getData("users");
+    const commentId = this.props.id;
+
+    const currentUserVotedComments = users.find(
+      (user) => user.username === currentUser.username
+    ).votedComments;
+
+    for (let i = 0; i < currentUserVotedComments.length + 1; i++) {
+      const votedCommentSaved = currentUserVotedComments[i];
+
+      if (votedCommentSaved?.commentId === commentId) {
+        votedCommentSaved.vote = vote;
+        break;
+      } else if (i === currentUserVotedComments.length) {
+        currentUserVotedComments[i] = {
+          commentId,
+          vote,
+        };
+        break;
+      }
+    }
+
+    setData("users", users);
   };
 
   render() {

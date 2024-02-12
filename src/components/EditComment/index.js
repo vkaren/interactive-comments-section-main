@@ -1,33 +1,44 @@
-import React, { useContext } from "react";
+import { createRef, useContext } from "react";
 import { AppContext } from "context";
 import styles from "./styles.module.css";
 
 const EditComment = ({ content, commentToEdit }) => {
-  const { preventDefaultBehaviourEnter, onWritingComment, onEditComment } =
-    useContext(AppContext);
+  const { searchAndUpdateComment } = useContext(AppContext);
+  const formRef = createRef();
 
-  const newCommentData = {
-    type: "edit",
-    commentToEdit,
+  const onEditComment = (e) => {
+    if (e.type === "click" || e.key === "Enter") {
+      e.preventDefault();
+      const formData = new FormData(formRef.current);
+      const newContent = formData.get("new_content");
+
+      searchAndUpdateComment({
+        commentId: commentToEdit.id,
+        propertyToUpdate: "content",
+        newValue: newContent,
+      });
+
+      commentToEdit.hideEditState();
+    }
   };
 
   return (
-    <>
+    <form ref={formRef} className={styles["comment_edit-form"]}>
       <textarea
         className={styles["comment_edit-textarea"]}
+        name="new_content"
         defaultValue={content}
-        onKeyDown={preventDefaultBehaviourEnter}
-        onKeyUp={onWritingComment(newCommentData)}
+        onKeyDown={onEditComment}
       ></textarea>
 
       <button
         className={styles["comment_update-btn"]}
-        onClick={() => onEditComment(newCommentData)}
+        onClick={onEditComment}
         aria-label="Update comment"
       >
         UPDATE
       </button>
-    </>
+    </form>
   );
 };
 
