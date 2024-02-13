@@ -2,18 +2,11 @@
 
 This is a solution to the [Interactive comments section challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/interactive-comments-section-iG1RugEG9). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
-### The challenge
+## Challenge Overview
 
-Users should be able to:
+The goal of this project is to create an interactive comments section that allows users to perform various actions, including viewing the optimal layout on different screen sizes, experiencing hover states for interactive elements, creating, reading, updating, and deleting comments and replies, and upvoting/downvoting comments. Two bonus tasks involve using localStorage for front-end state persistence and dynamically tracking the time since a comment or reply was posted.
 
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Create, Read, Update, and Delete comments and replies
-- Upvote and downvote comments
-- **Bonus**: If you're building a purely front-end project, use `localStorage` to save the current state in the browser that persists when the browser is refreshed.
-- **Bonus**: Instead of using the `createdAt` strings from the `data.json` file, try using timestamps and dynamically track the time since the comment or reply was posted.
-
-All the challenges were completed, and since for this project i wanted to practice NextJS i added some pages to have dynamic users
+All the challenges were successfully completed, and to further enhance my skills, I chose to implement the solution using Next.js.
 
 ### Screenshot
 
@@ -40,52 +33,34 @@ _Comments page_
 - [React](https://reactjs.org/)
 - [Next.js](https://nextjs.org/)
 
-### How works?
+## How it works?
 
-The sign in, sign up and forgot password pages will be redirected to comments page after the validation of their respective form
+The authentication process redirects users from sign-in, sign-up, and forgot password pages to the comments page upon successful form validation.
 
-On the comments page i wanted to do something similar to authenticate, searching in the saved users on localstorage the logged in user, meanwhile the form skeleton is rendered. In case the user can access, the app is rendered and if they can't, they will be redirected to sign in page
+### Comments Page Flow
 
-_src/pages/comments_
+1. During rendering, the app checks for the logged-in user in localStorage.
+2. If the user is authenticated, the app renders; otherwise, the user is redirected to the sign-in page.
 
-<img src="./readme_img/comments.png" width="600px">
+<img src="./readme_img/comments.png" width="450px">
 
-<img src="./readme_img/comments-render.png" width="600px">
+3. The comments page includes forms for adding, editing, and deleting comments.
+4. The AddComment component handles posting comments or replies.
+5. The EditComment component provides a form for editing comments.
+6. Comment timestamps are dynamically formatted using the getDateFormat utility.
 
-All functionality that requires typing in a textarea, either for create or edit comments are listened it by the onWritingComment function. This function use a debounce function to update the commentContent state only when the user stops typing, receives a newCommentData param that is required to add or edit a comment. If the enter key is pressed or the user clicks the send/reply/update button, their respective function will be called
+<img src="./readme_img/getDateFormat.png" width="450px">
 
-_src/context_
+7. Comment scores are updated upon voting, and the voted comment is added to the user's voted comments list.
 
-<img src="./readme_img/writing-comments.png" width="600px">
+<img src="./readme_img/voteComment.png" width="450px">
 
-<img src="./readme_img/onAddComments.png" width="600px">
+8. Clicking delete sets up the onClickDelete function, updating the state with the comment ID and displaying the delete modal. Accepting the deletion prompt results in the comment being removed from the comments list.
 
-<img src="./readme_img/onAddReply.png" width="600px">
+<img src="./readme_img/delete.png" width="450px">
 
-<img src="./readme_img/onEditComment.png" width="600px">
+### State Persistence
 
-The comments created by the user have in their createdAt property a value of Date.now, and these type of comments update their date format from getDateFormat
+All comment-related changes are stored in localStorage to maintain state across browser sessions.
 
-_src/components/Comment_
-
-<img src="./readme_img/comment-date-format.png" width="600px">
-
-<img src="./readme_img/updateDateFormat.png" width="600px">
-
-_src/utils/getDateFormat.js_
-
-<img src="./readme_img/getDateFormat.png" width="600px">
-
-When voting on a comment, the comment score will be updated and this comment will be added to the user's voted comments list
-
-_src/context_
-
-<img src="./readme_img/voteComment.png" width="600px">
-
-When the user clicks to the delete button, the onClickDelete function will be called, it has the comment id that will be deleted as a parameter, updates the state of commentToDelete with this id, and the state of isDeleting to true so that the deleteComment modal is displayed. If the user accepts to delete the comment, the function will loop through the comments list until it finds the comment and deletes it.
-
-_src/context_
-
-<img src="./readme_img/delete.png" width="600px">
-
-All these changes in comments list will be saved on localstorage
+Feel free to explore the code and provide feedback or suggestions. Happy coding!
