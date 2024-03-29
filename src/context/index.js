@@ -37,7 +37,10 @@ function AppProvider({ children, user }) {
     searchComment({
       commentId: commentToDelete,
       callback: deleteComment,
+      updateCommentState: true,
     });
+
+    deleteVotedCommentStorage(commentToDelete);
 
     setIsDeleting(false);
     setCommentToDelete(null);
@@ -45,6 +48,23 @@ function AppProvider({ children, user }) {
 
   const onCancelDeleteComment = () => {
     setIsDeleting(false);
+  };
+
+  const deleteVotedCommentStorage = (commentId) => {
+    const users = getData("users");
+
+    const currentUserVotedComments = users.find(
+      (user) => user.username === currentUser.username
+    ).votedComments;
+
+    const votedCommentToDelete = currentUserVotedComments.findIndex(
+      (comment) => comment.commentId === commentId
+    );
+
+    if (votedCommentToDelete > -1)
+      currentUserVotedComments.splice(votedCommentToDelete, 1);
+
+    setData("users", users);
   };
 
   const searchAndUpdateComment = ({
@@ -61,7 +81,7 @@ function AppProvider({ children, user }) {
     });
   };
 
-  const searchComment = ({ commentId, callback }) => {
+  const searchComment = ({ commentId, callback, updateCommentState }) => {
     /**
      * A function to search and manipulate a comment or reply
      * and then update the list of comments
@@ -91,14 +111,17 @@ function AppProvider({ children, user }) {
         }
       }
     }
-    updateComments({ comments: commentsCopy });
+    updateComments({ comments: commentsCopy, updateCommentState });
   };
 
-  const updateComments = ({ comments, lastCommentId = null }) => {
-    if (lastCommentId) {
-      setLastCommentId(lastCommentId);
-    }
-    setComments(comments);
+  const updateComments = ({
+    comments,
+    lastCommentId = null,
+    updateCommentState = false,
+  }) => {
+    if (lastCommentId) setLastCommentId(lastCommentId);
+    if (updateCommentState) setComments(comments);
+
     setData("comments", comments);
   };
 

@@ -10,6 +10,7 @@ class CommentLike extends Component {
     super(props);
     this.state = {
       vote: null,
+      score: this.props.score,
     };
   }
 
@@ -39,7 +40,7 @@ class CommentLike extends Component {
 
   onVoteComment = (vote) => {
     const { searchAndUpdateComment } = this.context;
-    let newScore = this.props.score;
+    let newScore = this.state.score;
 
     if (vote === "upvote") {
       newScore++;
@@ -47,12 +48,14 @@ class CommentLike extends Component {
       newScore--;
     }
 
+    this.setState({ score: newScore });
+
+    // Save in localstorage
     searchAndUpdateComment({
       commentId: this.props.id,
       propertyToUpdate: "score",
       newValue: newScore,
     });
-
     this.saveVotedCommentStorage(vote);
   };
 
@@ -97,7 +100,7 @@ class CommentLike extends Component {
           <PlusIcon />
         </button>
 
-        <span className={styles["comment_likes"]}>{this.props.score}</span>
+        <span className={styles["comment_likes"]}>{this.state.score}</span>
 
         <button
           className={`${styles["comment_like-btn"]} ${

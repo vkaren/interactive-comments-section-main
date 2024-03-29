@@ -34,9 +34,14 @@ const AddComment = ({ replyComment = null }) => {
       replies: [],
     };
 
-    const newComments = [...comments, commentToAdd];
+    const newComments = deepCopyList(comments);
+    newComments.push(commentToAdd);
 
-    updateComments({ comments: newComments, lastCommentId: commentToAdd.id });
+    updateComments({
+      comments: newComments,
+      lastCommentId: commentToAdd.id,
+      updateCommentState: true,
+    });
   };
 
   const addReply = (content) => {
@@ -60,7 +65,11 @@ const AddComment = ({ replyComment = null }) => {
       }
     }
 
-    updateComments({ comments: commentsCopy, lastCommentId: replyToAdd.id });
+    updateComments({
+      comments: commentsCopy,
+      lastCommentId: replyToAdd.id,
+      updateCommentState: true,
+    });
     replyComment.hideReplyState();
   };
 

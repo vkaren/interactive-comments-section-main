@@ -12,6 +12,7 @@ class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      content: this.props.content,
       isReplying: false,
       isEditing: false,
       dateFormat: null,
@@ -61,6 +62,10 @@ class Comment extends Component {
     this.setState({ dateFormat, timerDelayDateFormat });
   };
 
+  editContent = (newContent) => {
+    this.setState({ content: newContent });
+  };
+
   toggleReplyState = () => {
     this.setState({ isReplying: !this.state.isReplying });
   };
@@ -70,7 +75,7 @@ class Comment extends Component {
   };
 
   render() {
-    const { id, user, content, createdAt, score, replyingTo } = this.props;
+    const { id, user, createdAt, score, replyingTo } = this.props;
 
     return (
       <>
@@ -90,9 +95,13 @@ class Comment extends Component {
           <CommentLike id={id} score={score} />
 
           {this.state.isEditing ? (
-            <EditComment content={content} commentToEdit={this.commentToEdit} />
+            <EditComment
+              content={this.state.content}
+              editContent={this.editContent}
+              commentToEdit={this.commentToEdit}
+            />
           ) : (
-            <CommentText replyingTo={replyingTo} content={content} />
+            <CommentText replyingTo={replyingTo} content={this.state.content} />
           )}
         </div>
 
